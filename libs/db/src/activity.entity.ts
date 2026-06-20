@@ -26,7 +26,7 @@ export class ActivityEntity extends BaseEntity {
     @Column({ type: 'varchar', length: 26 })
     itineraryDayId: string
 
-    @ManyToOne(() => ItineraryDayEntity)
+    @ManyToOne(() => ItineraryDayEntity, (day) => day.activities)
     @JoinColumn({ name: 'itineraryDayId' })
     itineraryDay: ItineraryDayEntity
 }
