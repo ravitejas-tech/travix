@@ -1,13 +1,11 @@
 import { Logger } from '@nestjs/common'
 import { InjectDataSource } from '@nestjs/typeorm'
+import { CountrySeeder, CurrencySeeder, RoleSeeder } from '@travix/seeders'
 import { CommandRunner, Option, SubCommand } from 'nest-commander'
 import { DataSource } from 'typeorm'
 import { runSeeders, SeederConstructor } from 'typeorm-extension'
 
-const ALL_SEEDERS: SeederConstructor[] = [
-    // Add seeders here as the project grows, e.g.:
-    // InitialRolesSeeder,
-]
+const ALL_SEEDERS: SeederConstructor[] = [RoleSeeder, CurrencySeeder, CountrySeeder]
 
 @SubCommand({ name: 'seed' })
 export class SeedDbCommand extends CommandRunner {
