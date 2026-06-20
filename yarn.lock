@@ -2082,6 +2082,7 @@ __metadata:
   dependencies:
     "@sinclair/typebox": "npm:^0.34.33"
     "@travix/typescript-config": "workspace:*"
+    "@types/node": "npm:^26.0.0"
     "@types/validator": "npm:^13"
     typeorm: "npm:^0.3.23"
     typeorm-extension: "npm:^3.7.1"
@@ -2421,7 +2422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^26.0.0":
   version: 26.0.0
   resolution: "@types/node@npm:26.0.0"
   dependencies:
