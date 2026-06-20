@@ -25,7 +25,7 @@ export class BudgetEstimationEntity extends BaseEntity {
     @Column({ type: 'varchar', length: 26, unique: true })
     tripId: string
 
-    @OneToOne(() => TripEntity)
+    @OneToOne(() => TripEntity, (trip) => trip.budget)
     @JoinColumn({ name: 'tripId' })
     trip: TripEntity
 
