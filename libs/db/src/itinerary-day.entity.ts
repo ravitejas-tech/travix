@@ -1,4 +1,5 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
+import { ActivityEntity } from './activity.entity'
 import { BaseEntity } from './base.entity'
 import { TripEntity } from './trip.entity'
 
@@ -16,7 +17,10 @@ export class ItineraryDayEntity extends BaseEntity {
     @Column({ type: 'varchar', length: 26 })
     tripId: string
 
-    @ManyToOne(() => TripEntity)
+    @ManyToOne(() => TripEntity, (trip) => trip.days)
     @JoinColumn({ name: 'tripId' })
     trip: TripEntity
+
+    @OneToMany(() => ActivityEntity, (activity) => activity.itineraryDay)
+    activities: ActivityEntity[]
 }
