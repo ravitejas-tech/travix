@@ -26,7 +26,7 @@ export class HotelSuggestionEntity extends BaseEntity {
     @Column({ type: 'varchar', length: 26 })
     tripId: string
 
-    @ManyToOne(() => TripEntity)
+    @ManyToOne(() => TripEntity, (trip) => trip.hotels)
     @JoinColumn({ name: 'tripId' })
     trip: TripEntity
 }
