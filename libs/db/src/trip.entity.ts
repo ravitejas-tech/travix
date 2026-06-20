@@ -1,7 +1,10 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm'
 import { BudgetType, TripStatus } from '@travix/shared'
 import { BaseEntity } from './base.entity'
+import { BudgetEstimationEntity } from './budget-estimation.entity'
 import { CityEntity } from './city.entity'
+import { HotelSuggestionEntity } from './hotel-suggestion.entity'
+import { ItineraryDayEntity } from './itinerary-day.entity'
 import { UserEntity } from './user.entity'
 
 @Entity('trips')
@@ -35,4 +38,13 @@ export class TripEntity extends BaseEntity {
     @ManyToOne(() => CityEntity)
     @JoinColumn({ name: 'cityId' })
     city: CityEntity
+
+    @OneToMany(() => ItineraryDayEntity, (day) => day.trip)
+    days: ItineraryDayEntity[]
+
+    @OneToOne(() => BudgetEstimationEntity, (budget) => budget.trip)
+    budget: BudgetEstimationEntity | null
+
+    @OneToMany(() => HotelSuggestionEntity, (hotel) => hotel.trip)
+    hotels: HotelSuggestionEntity[]
 }
