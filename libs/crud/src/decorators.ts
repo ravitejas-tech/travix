@@ -282,13 +282,6 @@ export const HttpEndpoint = <
                 throw new Error(`Optional path param "${pathParam.name}" is required in validator.`)
             }
         }
-
-        const missingPathParam = validate?.request?.find(
-            (v) => v.type === 'param' && !pathParams.some((p) => p.name == v.name),
-        )
-        if (missingPathParam) {
-            throw new Error(`Request validator references non-existent path parameter "${missingPathParam.name}".`)
-        }
     }
 
     if (validate) {
