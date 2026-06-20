@@ -9,6 +9,7 @@
         "build": "tsc -b -v"
     },
     "dependencies": {
+        "@countrystatecity/countries": "^1.0.7",
         "@travix/db": "workspace:^",
         "typeorm": "^0.3.23",
         "typeorm-extension": "^3.7.1",

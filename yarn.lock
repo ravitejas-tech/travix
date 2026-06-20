@@ -585,6 +585,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@countrystatecity/countries@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "@countrystatecity/countries@npm:1.0.7"
+  checksum: 10c0/167108f09cb7f874719db030ddd89b7872997848400b0b7c30984b45e7f6c60102fb28ff99d2ab03faf0b878638d00c72d87deea3a3a3a87ccf30e108dfba3ed
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -2134,6 +2141,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@travix/seeders@workspace:libs/seeders"
   dependencies:
+    "@countrystatecity/countries": "npm:^1.0.7"
     "@travix/db": "workspace:^"
     "@travix/typescript-config": "workspace:*"
     typeorm: "npm:^0.3.23"
