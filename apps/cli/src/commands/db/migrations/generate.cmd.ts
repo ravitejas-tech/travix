@@ -31,8 +31,11 @@ export class MigrationGenerateCommand extends CommandRunner {
     parseDryRun(p: any) { return Boolean(p) }
 
     async run(passedParams: string[], options?: Record<string, any>) {
-        let [dir] = passedParams
-        dir = dir.startsWith('/') ? dir : resolve(process.cwd(), dir)
+        let [name] = passedParams
+        const migrationsDir = process.env['DATABASE_MIGRATIONS_DIR']
+            ? resolve(process.cwd(), process.env['DATABASE_MIGRATIONS_DIR'])
+            : process.cwd()
+        const dir = name.startsWith('/') ? name : resolve(migrationsDir, name)
         const { timestamp = Date.now(), pretty = false, check = false, dry: dryrun = false } = options
 
         try {
