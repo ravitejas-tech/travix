@@ -15,7 +15,7 @@
         "test:e2e": "turbo run test:e2e",
         "lint": "turbo run lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "cli": "turbo run build --filter=cli && yarn workspace cli start:prod"
+        "cli": "turbo run build --filter=cli^... && yarn workspace cli start:ts"
     },
     "devDependencies": {
         "@travix/eslint-config": "workspace:*",
