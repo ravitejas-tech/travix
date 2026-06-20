@@ -9,18 +9,19 @@ Strict rulebook for consistency. Follow without exception. If unclear, check exi
 
 - Folder layout (mirror exactly):
   - `src/cqrs/commands/impl/*.command.ts` + `src/cqrs/commands/handlers/*.handler.ts` — CQRS is **centralized at the app level**, never nested inside a module.
-  - `src/cqrs/queries/impl/*.query.ts` + `src/cqrs/queries/handlers/*.handler.ts`.
-  - `src/strategies/`, `src/guards/`, `src/decorators/`, `src/middlewares/`, `src/services/` (app-wide), `src/config/`, `src/utils/`.
-  - `src/modules/<feature>/` contains **only**: `<feature>.module.ts`, `controllers/v1/*.controller.ts`, `dtos/payloads.ts`, `dtos/responses.ts`, and feature-specific `services/` (with `index.ts` barrel). No commands/handlers/queries inside modules.
+  - `src/cqrs/queries/impl/*.query.ts` + `src/cqrs/queries/handlers/*.handler.ts` — same, for reads.
+  - `src/strategies/`, `src/guards/`, `src/decorators/`, `src/middlewares/`, `src/config/`, `src/utils/`.
+  - `src/modules/<feature>/` contains **only**: `<feature>.module.ts`, `controllers/v1/*.controller.ts`, `dtos/payloads.ts`, `dtos/responses.ts`. No commands/handlers/queries inside modules. **No feature "mapper/business" services** — that logic belongs in the CQRS handler. A `services/` folder is allowed only for genuine integrations/cross-cutting clients (e.g. `auth/services/token.service.ts`, `generation/services/*` calling an external API), never for entity→DTO mapping or ownership checks.
   - The module's `*.module.ts` imports its handlers from `api/cqrs/...` and registers them in `providers`.
-- Commands/queries extend the typed base: `class XCommand extends Command<Result> { public readonly payload: Static<typeof Payload> }`. Construct them with `Builder(XCommand, { payload }).build()` from `@travix/shared` — never `new`.
+- **Strict CQRS — no exceptions.** Every endpoint (read and write) goes through the bus: writes → `CommandBus` + a command handler; reads → `QueryBus` + a query handler. Controllers are request/response only: build the command/query with `Builder(...)` and call the bus. **Never** `@InjectDataSource()` / run a query / map / check ownership in a controller. All business logic (DB access, ownership/`NotFound` checks, entity→DTO mapping, generation-context building) lives inside handlers; duplicate small mappers across handlers rather than reintroducing a shared service.
+- Commands/queries extend the typed base: `class XCommand extends Command<Result> { public readonly payload: Static<typeof Payload> }` / `class XQuery extends Query<Result> {}`. Construct with `Builder(XCommand, { payload }).build()` from `@travix/shared` — never `new`.
 - Import across top-level folders with the `api/*` path alias (`api/cqrs/...`, `api/guards/...`), not deep relative paths.
 - Naming: `user.controller.ts`, `create-user.command.ts`/`.handler.ts`, `get-users.query.ts`/`.handler.ts`, `user.entity.ts`.
-- Controllers: request/response only, delegate to `CommandBus`/`QueryBus`. No business logic, no DB ops, no data transforms.
-- Logic placement: simple pass-through → Controller→Bus; shared/reusable → Service; complex/multi-step/multi-DB-op → CQRS Handler.
-- DB access: always `this.datasource.manager`. Never `getRepository()` or `@InjectEntityManager()`.
+- One feature = one module. Split sub-resources into their own modules (e.g. `trips`, `itinerary`, `hotels`) rather than piling multiple controllers into one module. Modules share nothing but the app-level CQRS handlers they register; no cross-module service imports.
+- Logic placement: read → CQRS query handler; write (simple or complex/multi-step/multi-DB-op) → CQRS command handler. Controllers never hold logic.
+- DB access: always `this.datasource.manager` inside handlers. Never `getRepository()` or `@InjectEntityManager()`. Prefer `createQueryBuilder(...)` with explicit `innerJoinAndSelect`/`leftJoinAndSelect` over multiple `manager.find()` calls for related reads.
 - Multiple DB ops → wrap in `manager.transaction()`.
-- Relations: manually define the FK column, then `@ManyToOne`/`@JoinColumn`. Never rely on implicit joins.
+- Relations: manually define the FK column, then `@ManyToOne`/`@JoinColumn`. Define the inverse side (`@OneToMany`/`@OneToOne`) when you need it for an explicit join — never rely on implicit/eager joins; always join explicitly in the query builder.
 - Every entity extends `BaseEntity` (`id`, `createdAt`, `updatedAt`, `deletedAt`).
 - Migrations: pre-production → keep only one file, delete & regenerate on each change. Post-production → never delete, always add new.
 - Seeders: `InitialSeeder` (required app data), `DummySeeder` (dev/test data).
@@ -38,6 +39,7 @@ Strict rulebook for consistency. Follow without exception. If unclear, check exi
 - Every route is declared with the `@HttpEndpoint({ method, path, validate })` decorator from `@travix/crud` — never the bare `@Get`/`@Post`/`@Body`/`@Query`/`@Param` decorators.
   - `validate.request`: array of `{ type: 'body' | 'query' | 'param', schema, name?, required? }`. Validated args are injected positionally in the same order, before any `@`-decorated params.
   - `validate.response`: `{ schema, responseCode? }`. The response is auto-validated and stripped to the schema by `TypeboxTransformInterceptor` — do not manually `Value.Parse` in the controller.
+- Pagination (inside the query handler): build a query builder and call `paginateQueryBuilder(qb, { page, limit })` (or `paginateRaw` for raw selects) from `@travix/crud`; return its `{ items, meta, links }` directly, mapping `items` when the response DTO differs from the entity. Response schema is `PaginatedResponse(ItemSchema)`. The controller passes `page`/`limit` (optional `coerceTypes: true` query validators) into the query.
   - Set `auth: true` for protected routes (adds the Swagger bearer marker); pair it with `@UseGuards(JwtAuthGuard)`.
 - Validation/format setup lives in `main.ts` via `configureNestJsTypebox({ patchSwagger: true, setFormats: true })`. Add new string formats in `libs/crud/src/formats.ts`, not per-schema.
 - After changing anything in `libs/crud` (or any lib), rebuild it (`yarn workspace @travix/crud build`) — apps import the compiled `dist`.
@@ -47,6 +49,12 @@ Strict rulebook for consistency. Follow without exception. If unclear, check exi
 - JWT auth: stateless access + refresh tokens. All secrets/expiries come from env (`JWT_ACCESS_SECRET`, `JWT_ACCESS_EXPIRES_IN`, `JWT_REFRESH_SECRET`, `JWT_REFRESH_EXPIRES_IN`). Never hardcode.
 - Token issuing/verifying goes through `TokenService` (`modules/auth`). Passwords hashed with `bcrypt` using `UserEntity.PASSWORD_SALT_ROUNDS`.
 - Protect routes with `@UseGuards(JwtAuthGuard)`; read the current user via the `@AuthUser()` param decorator (`@AuthUser('id')` for a single field).
+
+### AI generation
+
+- Lives in its own feature module `modules/generation/` (`@Global` `GenerationModule` + `services/` for the provider clients). The provider-agnostic contracts — the `Generated*`/`GenerationContext` types and the structured-output `generation*Schema` objects — live in `@travix/shared` (`libs/shared/src/generation/`), not in the api app.
+- Consumers depend on the abstract `GenerationService` only; the concrete provider is chosen by env at module load (`GEMINI_API_KEY` present → `GeminiGenerationService` on `GEMINI_MODEL`, else the deterministic `StubGenerationService`). All keys/models come from env — never hardcode.
+- It is invoked **only from CQRS handlers** (e.g. trip/day/hotel generation commands), never directly from a controller. This is the one legitimate "service" — an external-API client — not feature/business logic.
 
 ## Web (React Router)
 
