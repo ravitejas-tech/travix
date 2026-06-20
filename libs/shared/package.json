@@ -9,6 +9,7 @@
         "build": "tsc -b -v"
     },
     "dependencies": {
+        "@google/genai": "^2.9.0",
         "date-fns": "^4.1.0"
     },
     "devDependencies": {
