@@ -11,12 +11,12 @@
     "dependencies": {
         "@countrystatecity/countries": "^1.0.7",
         "@travix/db": "workspace:^",
-        "typeorm": "^0.3.23",
-        "typeorm-extension": "^3.7.1",
         "ulid": "^3.0.0"
     },
     "peerDependencies": {
-        "reflect-metadata": "*"
+        "reflect-metadata": "*",
+        "typeorm": "^0.3.23",
+        "typeorm-extension": "^3.7.1"
     },
     "devDependencies": {
         "@travix/typescript-config": "workspace:*",

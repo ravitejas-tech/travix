@@ -20,8 +20,12 @@
     "devDependencies": {
         "@travix/eslint-config": "workspace:*",
         "@travix/typescript-config": "workspace:*",
+        "mysql2": "^3.14.1",
         "prettier": "^3.2.5",
+        "ts-node": "^10.9.2",
         "turbo": "^2.5.0",
+        "typeorm": "^0.3.23",
+        "typeorm-extension": "^3.7.1",
         "typescript": "^5.8.3"
     }
 }

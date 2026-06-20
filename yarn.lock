@@ -2113,14 +2113,14 @@ __metadata:
     "@travix/typescript-config": "workspace:*"
     "@types/node": "npm:^26.0.0"
     "@types/validator": "npm:^13"
-    typeorm: "npm:^0.3.23"
-    typeorm-extension: "npm:^3.7.1"
     typescript: "npm:^5.8.3"
     validator: "npm:^13.15.0"
   peerDependencies:
     "@nestjs/common": "*"
     "@nestjs/swagger": "*"
     reflect-metadata: "*"
+    typeorm: ^0.3.23
+    typeorm-extension: ^3.7.1
   languageName: unknown
   linkType: soft
 
@@ -2130,11 +2130,11 @@ __metadata:
   dependencies:
     "@travix/shared": "workspace:^"
     "@travix/typescript-config": "workspace:*"
-    typeorm: "npm:^0.3.23"
     typescript: "npm:^5.8.3"
     ulid: "npm:^3.0.0"
   peerDependencies:
     reflect-metadata: "*"
+    typeorm: ^0.3.23
   languageName: unknown
   linkType: soft
 
@@ -2166,12 +2166,12 @@ __metadata:
     "@countrystatecity/countries": "npm:^1.0.7"
     "@travix/db": "workspace:^"
     "@travix/typescript-config": "workspace:*"
-    typeorm: "npm:^0.3.23"
-    typeorm-extension: "npm:^3.7.1"
     typescript: "npm:^5.8.3"
     ulid: "npm:^3.0.0"
   peerDependencies:
     reflect-metadata: "*"
+    typeorm: ^0.3.23
+    typeorm-extension: ^3.7.1
   languageName: unknown
   linkType: soft
 
@@ -3166,7 +3166,6 @@ __metadata:
     bcrypt: "npm:^6.0.0"
     helmet: "npm:^8.1.0"
     jest: "npm:^29.7.0"
-    mysql2: "npm:^3.14.1"
     nestjs-pino: "npm:^4.6.1"
     passport: "npm:^0.7.0"
     passport-jwt: "npm:^4.0.1"
@@ -3179,7 +3178,6 @@ __metadata:
     supertest: "npm:^7.0.0"
     ts-jest: "npm:^29.2.5"
     ts-loader: "npm:^9.5.2"
-    ts-node: "npm:^10.9.2"
     tsconfig-paths: "npm:^4.2.0"
     typeorm: "npm:^0.3.23"
     typescript: "npm:^5.8.3"
@@ -3808,7 +3806,6 @@ __metadata:
     chalk: "npm:^5.6.2"
     change-case-all: "npm:^2.1.0"
     jest: "npm:^29.7.0"
-    mysql2: "npm:^3.14.1"
     nest-commander: "npm:^3.17.0"
     reflect-metadata: "npm:^0.2.2"
     rxjs: "npm:^7.8.1"
@@ -3816,7 +3813,6 @@ __metadata:
     supertest: "npm:^7.0.0"
     ts-jest: "npm:^29.2.5"
     ts-loader: "npm:^9.5.2"
-    ts-node: "npm:^10.9.2"
     tsconfig-paths: "npm:^4.2.0"
     typeorm: "npm:^0.3.23"
     typeorm-extension: "npm:^3.7.1"
@@ -8560,8 +8556,12 @@ __metadata:
   dependencies:
     "@travix/eslint-config": "workspace:*"
     "@travix/typescript-config": "workspace:*"
+    mysql2: "npm:^3.14.1"
     prettier: "npm:^3.2.5"
+    ts-node: "npm:^10.9.2"
     turbo: "npm:^2.5.0"
+    typeorm: "npm:^0.3.23"
+    typeorm-extension: "npm:^3.7.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft

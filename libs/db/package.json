@@ -10,11 +10,11 @@
     },
     "dependencies": {
         "@travix/shared": "workspace:^",
-        "typeorm": "^0.3.23",
         "ulid": "^3.0.0"
     },
     "peerDependencies": {
-        "reflect-metadata": "*"
+        "reflect-metadata": "*",
+        "typeorm": "^0.3.23"
     },
     "devDependencies": {
         "@travix/typescript-config": "workspace:*",
