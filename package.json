@@ -1,0 +1,27 @@
+{
+    "name": "travix",
+    "version": "0.0.1",
+    "private": true,
+    "packageManager": "yarn@4.9.2",
+    "workspaces": [
+        "apps/*",
+        "packages/*",
+        "libs/*"
+    ],
+    "scripts": {
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "test": "turbo run test",
+        "test:e2e": "turbo run test:e2e",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "cli": "turbo run build --filter=cli && yarn workspace cli start:prod"
+    },
+    "devDependencies": {
+        "@travix/eslint-config": "workspace:*",
+        "@travix/typescript-config": "workspace:*",
+        "prettier": "^3.2.5",
+        "turbo": "^2.5.0",
+        "typescript": "^5.8.3"
+    }
+}

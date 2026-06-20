@@ -1,0 +1,27 @@
+{
+    "name": "@travix/crud",
+    "version": "0.1.0",
+    "private": true,
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "dev": "yarn build --watch",
+        "build": "tsc -b -v"
+    },
+    "dependencies": {
+        "@sinclair/typebox": "^0.34.33",
+        "typeorm": "^0.3.23",
+        "typeorm-extension": "^3.7.1",
+        "validator": "^13.15.0"
+    },
+    "peerDependencies": {
+        "@nestjs/common": "*",
+        "@nestjs/swagger": "*",
+        "reflect-metadata": "*"
+    },
+    "devDependencies": {
+        "@travix/typescript-config": "workspace:*",
+        "@types/validator": "^13",
+        "typescript": "^5.8.3"
+    }
+}

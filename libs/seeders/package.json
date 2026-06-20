@@ -1,0 +1,24 @@
+{
+    "name": "@travix/seeders",
+    "version": "0.1.0",
+    "private": true,
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "dev": "yarn build --watch",
+        "build": "tsc -b -v"
+    },
+    "dependencies": {
+        "@travix/db": "workspace:^",
+        "typeorm": "^0.3.23",
+        "typeorm-extension": "^3.7.1",
+        "ulid": "^3.0.0"
+    },
+    "peerDependencies": {
+        "reflect-metadata": "*"
+    },
+    "devDependencies": {
+        "@travix/typescript-config": "workspace:*",
+        "typescript": "^5.8.3"
+    }
+}

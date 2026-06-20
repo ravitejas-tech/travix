@@ -1,0 +1,29 @@
+{
+    "name": "@travix/eslint-config",
+    "version": "0.1.0",
+    "private": true,
+    "files": [
+        "base.js",
+        "nest.js",
+        "react-router.js"
+    ],
+    "peerDependencies": {
+        "eslint": ">=8",
+        "prettier": ">=3",
+        "turbo": ">=2"
+    },
+    "peerDependenciesMeta": {
+        "turbo": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^7.1.0",
+        "@typescript-eslint/parser": "^7.1.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-config-turbo": "^2.0.0",
+        "eslint-plugin-only-warn": "^1.1.0",
+        "eslint-plugin-prettier": "^5.1.3",
+        "typescript": "^5.8.3"
+    }
+}

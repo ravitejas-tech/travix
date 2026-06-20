@@ -1,0 +1,18 @@
+{
+    "name": "@travix/shared",
+    "version": "0.1.0",
+    "private": true,
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "dev": "yarn build --watch",
+        "build": "tsc -b -v"
+    },
+    "dependencies": {
+        "date-fns": "^4.1.0"
+    },
+    "devDependencies": {
+        "@travix/typescript-config": "workspace:*",
+        "typescript": "^5.8.3"
+    }
+}
