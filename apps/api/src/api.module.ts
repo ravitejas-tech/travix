@@ -9,6 +9,11 @@ import { LoggerModule } from 'nestjs-pino'
 import { databaseConfig } from './config/database.config'
 import { loggerConfig } from './config/logger.config'
 import { AuthModule } from './modules/auth/auth.module'
+import { HotelsModule } from './modules/hotels/hotels.module'
+import { ItineraryModule } from './modules/itinerary/itinerary.module'
+import { LocationsModule } from './modules/locations/locations.module'
+import { TripsModule } from './modules/trips/trips.module'
+import { GenerationModule } from './modules/generation/generation.module'
 
 @Module({
     imports: [
@@ -50,7 +55,12 @@ import { AuthModule } from './modules/auth/auth.module'
         }),
         PassportModule.register({ defaultStrategy: 'jwt' }),
         CqrsModule.forRoot(),
+        GenerationModule,
         AuthModule,
+        LocationsModule,
+        TripsModule,
+        ItineraryModule,
+        HotelsModule,
     ],
 })
 export class ApiModule {}
