@@ -1,8 +1,10 @@
-import { Column, Entity } from 'typeorm'
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm'
 import { BaseEntity } from './base.entity'
+import { RoleEntity } from './role.entity'
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
+    // properties
     @Column({ type: 'varchar', nullable: true })
     firstName: string
 
@@ -21,6 +23,11 @@ export class UserEntity extends BaseEntity {
     @Column('date', { nullable: true })
     dateOfBirth: Date
 
-    // CONSTANTS
+    // relations
+    @ManyToMany(() => RoleEntity, (r) => r.name, { cascade: true })
+    @JoinTable()
+    roles: RoleEntity[]
+
+    // constants
     static PASSWORD_SALT_ROUNDS: number = 10
 }
