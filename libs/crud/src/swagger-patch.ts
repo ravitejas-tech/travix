@@ -1,13 +1,25 @@
 import { Type as NestType } from '@nestjs/common'
-import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory'
+import { createRequire } from 'module'
+import { dirname, resolve } from 'path'
 import { TypeGuard } from '@sinclair/typebox'
+
+interface SchemaObjectFactory {
+    exploreModelSchema(type: any, schemas: Record<string, any>, schemaRefsStack?: string[]): string
+    isLazyTypeFunc(type: any): boolean
+}
+
+const _require = createRequire(__filename)
+const pkgRoot = dirname(_require.resolve('@nestjs/swagger/package.json'))
+const { SchemaObjectFactory } = _require(resolve(pkgRoot, 'dist/services/schema-object-factory.js')) as {
+    SchemaObjectFactory: { prototype: SchemaObjectFactory & { __travixPatched?: boolean } }
+}
 
 function isSchemaValidator(type: any): boolean {
     return type && typeof type === 'object' && typeof type.validate === 'function'
 }
 
 export function patchNestJsSwagger() {
-    if ((SchemaObjectFactory.prototype as any).__travixPatched) return
+    if (SchemaObjectFactory.prototype.__travixPatched) return
     const defaultExplore = SchemaObjectFactory.prototype.exploreModelSchema
 
     const extendedExplore: SchemaObjectFactory['exploreModelSchema'] = function exploreModelSchema(
@@ -16,7 +28,7 @@ export function patchNestJsSwagger() {
         schemas,
         schemaRefsStack,
     ) {
-        if (this['isLazyTypeFunc'](type)) {
+        if (this.isLazyTypeFunc(type)) {
             const factory = type as () => NestType<unknown>
             type = factory()
         }
@@ -28,5 +40,5 @@ export function patchNestJsSwagger() {
     }
 
     SchemaObjectFactory.prototype.exploreModelSchema = extendedExplore
-    ;(SchemaObjectFactory.prototype as any).__travixPatched = true
+    SchemaObjectFactory.prototype.__travixPatched = true
 }
