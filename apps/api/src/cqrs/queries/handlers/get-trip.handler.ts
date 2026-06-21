@@ -25,6 +25,8 @@ export class GetTripHandler implements IQueryHandler<GetTripQuery> {
       .createQueryBuilder(TripEntity, 'trip')
       .innerJoinAndSelect('trip.city', 'city')
       .innerJoinAndSelect('city.country', 'country')
+      .leftJoinAndSelect('trip.userLocation', 'userLocation')
+      .leftJoinAndSelect('userLocation.country', 'userLocationCountry')
       .leftJoinAndSelect('trip.budget', 'budget')
       .leftJoinAndSelect('budget.currency', 'currency')
       .where('trip.id = :tripId', { tripId })
@@ -59,6 +61,13 @@ export class GetTripHandler implements IQueryHandler<GetTripQuery> {
         cityName: trip.city.name,
         countryName: trip.city.country.name,
       },
+      userLocation: trip.userLocation
+        ? {
+            cityId: trip.userLocationId!,
+            cityName: trip.userLocation.name,
+            countryName: trip.userLocation.country?.name ?? '',
+          }
+        : null,
       numberOfDays: trip.numberOfDays,
       budgetType: trip.budgetType,
       interests: trip.interests ?? [],
@@ -69,9 +78,13 @@ export class GetTripHandler implements IQueryHandler<GetTripQuery> {
       budget: budget?.currency
         ? {
             flights: this.toNumber(budget.flights),
+            flightsDescription: budget.flightsDescription,
             accommodation: this.toNumber(budget.accommodation),
+            accommodationDescription: budget.accommodationDescription,
             food: this.toNumber(budget.food),
+            foodDescription: budget.foodDescription,
             activities: this.toNumber(budget.activities),
+            activitiesDescription: budget.activitiesDescription,
             total: Number(budget.total),
             currencyCode: budget.currency.code,
             currencySymbol: budget.currency.symbol,
