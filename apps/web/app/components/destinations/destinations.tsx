@@ -12,7 +12,7 @@ export function Destinations() {
         <SectionHeading
           eyebrow="Destinations"
           title="Wherever you're dreaming of, Travix has been there"
-          subtitle="From alpine valleys to island sunsets — get a tailored plan for any corner of the map."
+          subtitle="From alpine valleys to island sunsets, get a tailored plan for any corner of the map."
         />
 
         <div className="mt-14 grid auto-rows-[180px] grid-cols-2 gap-5 sm:auto-rows-[200px] lg:grid-cols-4">

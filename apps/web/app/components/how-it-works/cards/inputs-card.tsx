@@ -6,7 +6,7 @@ export function InputsCard() {
     <BentoCard className="flex flex-col justify-center gap-3 bg-white p-5">
       <div>
         <h3 className="text-base font-semibold text-primary">Tell us your trip</h3>
-        <p className="text-sm text-muted">A quick form — that's it.</p>
+        <p className="text-sm text-muted">A quick form, that's it.</p>
       </div>
       <div className="flex flex-col gap-2">
         {TRIP_INPUTS.map((field) => {

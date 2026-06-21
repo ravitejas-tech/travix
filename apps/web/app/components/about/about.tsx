@@ -28,7 +28,7 @@ export function About() {
           <p className="text-muted">
             Travix learns your budget, your dates and the things you enjoy, then
             turns them into a trip you can reshape whenever the mood strikes. Every
-            plan stays private to you — yours to tweak, regenerate or follow exactly
+            plan stays private to you, yours to tweak, regenerate or follow exactly
             as it is.
           </p>
           <StatGrid />

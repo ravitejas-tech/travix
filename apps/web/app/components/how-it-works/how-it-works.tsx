@@ -16,7 +16,7 @@ export function HowItWorks() {
       <SectionHeading
         eyebrow="How it works"
         title="Four steps to your perfect trip"
-        subtitle="Share a few details and how you like to travel — Travix shapes everything else."
+        subtitle="Share a few details and how you like to travel. Travix shapes everything else."
       />
 
       <div className="mt-8 md:min-h-0 md:flex-1">

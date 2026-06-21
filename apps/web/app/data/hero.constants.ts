@@ -10,7 +10,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   },
   {
     image: "/images/hero/carousel-2.png",
-    headline: "Let intelligence map the route — you keep the wonder.",
+    headline: "Let intelligence map the route. You keep the wonder.",
     location: "Hidden Coast · Worldwide",
     title: "Find places you'd never search for",
     subtitle: "AI surfaces the spots that match exactly what you love.",
@@ -27,7 +27,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     headline: "One idea in. A whole trip out.",
     location: "Anywhere · You decide",
     title: "Your next journey starts here",
-    subtitle: "Name the place — we'll take it from there.",
+    subtitle: "Name the place. We'll take it from there.",
   },
 ];
 

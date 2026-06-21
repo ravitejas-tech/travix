@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
-// Shared easing for every scroll/entrance animation — a soft "ease-out" that
+// Shared easing for every scroll/entrance animation, a soft "ease-out" that
 // decelerates naturally instead of bouncing.
 export const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 

@@ -9,7 +9,7 @@ import { Footer } from "../components/footer/footer";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Travix — Your AI travel agent" },
+    { title: "Travix · Your AI travel agent" },
     {
       name: "description",
       content:
