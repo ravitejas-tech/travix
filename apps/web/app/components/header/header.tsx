@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router";
 import { Button } from "../ui/button";
 import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
@@ -6,6 +7,7 @@ import { useScrolled } from "~/hooks/use-scrolled";
 
 export function Header() {
   const scrolled = useScrolled(80);
+  const navigate = useNavigate();
 
   return (
     <motion.header
@@ -24,8 +26,8 @@ export function Header() {
         <Logo compact={scrolled} />
         <NavMenu scrolled={scrolled} />
         <div className="flex items-center gap-3">
-          <a
-            href="/login"
+          <Link
+            to="/login"
             className={`hidden text-sm font-medium transition-colors sm:block ${
               scrolled
                 ? "text-muted hover:text-primary"
@@ -33,8 +35,13 @@ export function Header() {
             }`}
           >
             Sign in
-          </a>
-          <Button variant={scrolled ? "solid" : "primary"}>Get started</Button>
+          </Link>
+          <Button
+            variant={scrolled ? "solid" : "primary"}
+            onClick={() => navigate("/register")}
+          >
+            Get started
+          </Button>
         </div>
       </div>
     </motion.header>
