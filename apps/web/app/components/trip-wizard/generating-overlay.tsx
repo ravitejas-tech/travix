@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Plane } from 'lucide-react'
 import { useEffect, useState } from 'react'
+
+import { RobotMascot } from '~/components/dashboard/chat/robot-mascot'
 
 const MESSAGES = [
     'Scouting the best spots…',
@@ -19,13 +20,7 @@ export function GeneratingOverlay() {
 
     return (
         <div className="flex flex-col items-center justify-center gap-6 px-8 py-16 text-center">
-            <motion.div
-                animate={{ x: [-10, 10, -10], y: [0, -6, 0], rotate: [-6, 6, -6] }}
-                transition={{ repeat: Infinity, duration: 2.4, ease: 'easeInOut' }}
-                className="flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/10 text-primary"
-            >
-                <Plane className="h-9 w-9" />
-            </motion.div>
+            <RobotMascot />
 
             <div>
                 <h3 className="text-xl font-bold text-primary">Travix is planning your trip</h3>
