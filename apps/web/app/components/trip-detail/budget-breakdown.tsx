@@ -22,6 +22,7 @@ export function BudgetBreakdown({ budget }: BudgetBreakdownProps) {
             <div className="flex flex-col gap-3">
                 {BUDGET_BREAKDOWN_ROWS.map((row, i) => {
                     const value = budget[row.key] as number | null | undefined
+                    const description = budget[row.descriptionKey] as string | null | undefined
                     const pct = budget.total ? ((value ?? 0) / budget.total) * 100 : 0
                     const Icon = row.icon
                     return (
@@ -42,6 +43,9 @@ export function BudgetBreakdown({ budget }: BudgetBreakdownProps) {
                                         transition={{ duration: 0.6, delay: i * 0.08 }}
                                     />
                                 </div>
+                                {description && (
+                                    <p className="mt-1 text-xs text-muted/70 leading-relaxed">{description}</p>
+                                )}
                             </div>
                         </div>
                     )
