@@ -1,51 +1,42 @@
+import { useState } from 'react'
+
 import type { Route } from './+types/home'
-import { BudgetOverview } from '../../components/dashboard/budget-overview'
-import { DashboardHero } from '../../components/dashboard/dashboard-hero'
-import { InlinePlanner } from '../../components/dashboard/inline-planner'
-import { InterestCloud } from '../../components/dashboard/interest-cloud'
-import { RecentTrips } from '../../components/dashboard/recent-trips'
-import { StatsRow } from '../../components/dashboard/stats-row'
-import { ErrorScreen } from '../../components/ui/error-screen'
-import { LoadingScreen } from '../../components/ui/loading-screen'
-import { useTrips } from '~/queries/trips.query'
+import { ChatComposer } from '../../components/dashboard/chat/chat-composer'
+import { ChatGreeting } from '../../components/dashboard/chat/chat-greeting'
+import { ChatSuggestions } from '../../components/dashboard/chat/chat-suggestions'
+import { RobotMascot } from '../../components/dashboard/chat/robot-mascot'
+import { TripWizardModal } from '../../components/trip-wizard/trip-wizard-modal'
 
 export function meta({}: Route.MetaArgs) {
-    return [{ title: 'Dashboard · Travix' }]
+    return [{ title: 'Plan a trip · Travix' }]
 }
 
 export default function DashboardHome() {
-    const { data, isLoading, isError, refetch } = useTrips()
-    const trips = data?.items ?? []
+    const [wizardOpen, setWizardOpen] = useState(false)
+    const [initialInterests, setInitialInterests] = useState<string[]>([])
 
-    if (isLoading) return <LoadingScreen message="Loading your dashboard…" />
-    if (isError) return <ErrorScreen message="We couldn't load your dashboard." onRetry={refetch} />
+    const openWizard = (interests: string[] = []) => {
+        setInitialInterests(interests)
+        setWizardOpen(true)
+    }
 
     return (
-        <div className="mx-auto max-w-5xl space-y-8 px-6 py-8 sm:px-8">
-            <DashboardHero tripCount={trips.length} />
+        <div className="relative flex min-h-full flex-col items-center justify-center px-6 py-12">
+            <div className="absolute right-5 top-5 sm:right-8 sm:top-8">
+                <RobotMascot />
+            </div>
 
-            {trips.length === 0 ? (
-                <div className="space-y-6">
-                    <div className="rounded-2xl bg-blue-50/40 border border-blue-100/50 p-4 text-sm text-primary flex items-start gap-2.5">
-                        <span className="font-semibold text-accent">✨ Travel AI:</span>
-                        <span>
-                            Create a fully customized daily plan, hotel options, and budget breakdown in under 30
-                            seconds. Try it below!
-                        </span>
-                    </div>
-                    <InlinePlanner alwaysExpanded />
-                </div>
-            ) : (
-                <>
-                    <InlinePlanner />
-                    <StatsRow trips={trips} />
-                    <RecentTrips trips={trips} />
-                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                        <InterestCloud trips={trips} />
-                        <BudgetOverview trips={trips} />
-                    </div>
-                </>
-            )}
+            <div className="w-full max-w-2xl space-y-8">
+                <ChatGreeting />
+                <ChatComposer onOpen={() => openWizard()} />
+                <ChatSuggestions onPick={(interest) => openWizard([interest])} />
+            </div>
+
+            <TripWizardModal
+                open={wizardOpen}
+                onClose={() => setWizardOpen(false)}
+                initialInterests={initialInterests}
+            />
         </div>
     )
 }
