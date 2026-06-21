@@ -14,7 +14,10 @@ import {
   CreateTripPayload,
   LimitQuery,
   PageQuery,
+  SearchQuery,
+  SortQuery,
   TripIdParam,
+  TripSort,
 } from '../../dtos/payloads';
 import {
   PaginatedTripsResponse,
@@ -71,6 +74,18 @@ export class V1TripsController {
           required: false,
           coerceTypes: true,
         },
+        {
+          type: 'query',
+          name: 'search',
+          schema: SearchQuery,
+          required: false,
+        },
+        {
+          type: 'query',
+          name: 'sort',
+          schema: SortQuery,
+          required: false,
+        },
       ],
       response: { schema: PaginatedTripsResponse },
     },
@@ -78,10 +93,12 @@ export class V1TripsController {
   async list(
     page = 1,
     limit = 20,
+    search: string | undefined,
+    sort: TripSort | undefined,
     @AuthUser('id') userId: string,
   ): Promise<Static<typeof PaginatedTripsResponse>> {
     return this.queryBus.execute(
-      Builder(GetTripsQuery, { userId, page, limit }).build(),
+      Builder(GetTripsQuery, { userId, page, limit, search, sort }).build(),
     );
   }
 
