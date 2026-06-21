@@ -7,7 +7,7 @@
 Travix is a modern, AI-powered travel planner and companion dashboard. Users can plan new trips using an interactive multi-step wizard, generate personalized itineraries, estimate trip budgets, explore hotel suggestions, and customize activities — all driven by Google Gemini AI structured generation.
 
 🌐 **Live Demo (Frontend)**: [https://travix-zeta.vercel.app](https://travix-zeta.vercel.app)  
-⚡ **API Endpoint (NestJS)**: [https://travix.onrender.com](https://travix.onrender.com)
+⚡ **API Endpoint (NestJS)**: [https://travix-api.vercel.app/](https://travix-api.vercel.app/)
 
 The project is structured as a high-performance **monorepo** managed by **Turborepo** and **Yarn v4 (Workspaces)**.
 
@@ -374,7 +374,7 @@ yarn dev --filter=api
 ### Deployed Services & Providers
 
 - **Database (MySQL)**: Deployed on **[Aiven.io](https://aiven.io/)** (Free Trial MySQL instance).
-- **Backend API (NestJS REST API)**: Deployed on **[Render.com](https://render.com/)** (Free Web Service tier).
+- **Backend API (NestJS REST API)**: Deployed on **[Vercel.com](https://vercel.com/)** (Free Hobby tier).
 - **Frontend Web (React Router v8 SPA)**: Deployed on **[Vercel.com](https://vercel.com/)** (Free Hobby tier).
 
 ### Deployment Setup Details
