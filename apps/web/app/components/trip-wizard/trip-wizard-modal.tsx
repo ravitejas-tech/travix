@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 import { toast } from 'sonner'
@@ -21,9 +21,10 @@ const STEP_FIELDS: (keyof CreateTripValues)[][] = [['cityId'], ['numberOfDays', 
 interface TripWizardModalProps {
     open: boolean
     onClose: () => void
+    initialInterests?: string[]
 }
 
-export function TripWizardModal({ open, onClose }: TripWizardModalProps) {
+export function TripWizardModal({ open, onClose, initialInterests }: TripWizardModalProps) {
     const navigate = useNavigate()
     const [step, setStep] = useState(0)
     const { mutate, isPending } = useCreateTrip()
@@ -38,6 +39,20 @@ export function TripWizardModal({ open, onClose }: TripWizardModalProps) {
             currencyCode: 'USD',
         },
     })
+
+    useEffect(() => {
+        if (!open) return
+        setStep(0)
+        form.reset({
+            cityId: '',
+            cityLabel: '',
+            numberOfDays: 5,
+            budgetType: 'medium',
+            interests: initialInterests ?? [],
+            currencyCode: 'USD',
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [open])
 
     const next = async () => {
         if (await form.trigger(STEP_FIELDS[step])) setStep((s) => s + 1)
