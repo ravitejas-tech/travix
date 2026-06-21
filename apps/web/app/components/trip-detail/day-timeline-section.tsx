@@ -39,7 +39,7 @@ export function DayTimelineSection({ tripId, day }: DayTimelineSectionProps) {
             <div className="absolute left-[11px] top-10 bottom-0 w-0.5 bg-slate-200" />
 
             {/* Day Header Marker & Row */}
-            <div className="mb-4 flex items-start justify-between gap-3 relative z-10">
+            <div className="mb-4 flex items-start justify-between gap-3 relative z-30">
                 <div className="flex items-start gap-4">
                     {/* Glowing Day Node */}
                     <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white shadow-md shadow-primary/25 border-2 border-white ring-4 ring-primary/10">
