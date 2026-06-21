@@ -21,6 +21,18 @@ export class BudgetEstimationEntity extends BaseEntity {
     @Column({ type: 'decimal', precision: 10, scale: 2 })
     total: number
 
+    @Column({ type: 'text', nullable: true })
+    flightsDescription: string | null
+
+    @Column({ type: 'text', nullable: true })
+    accommodationDescription: string | null
+
+    @Column({ type: 'text', nullable: true })
+    foodDescription: string | null
+
+    @Column({ type: 'text', nullable: true })
+    activitiesDescription: string | null
+
     // relations
     @Column({ type: 'varchar', length: 26, unique: true })
     tripId: string
