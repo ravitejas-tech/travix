@@ -1,15 +1,40 @@
-import { Globe, LayoutDashboard, Map, Plane, TrendingUp, Wallet, type LucideIcon } from 'lucide-react'
+import {
+    Compass,
+    Globe,
+    LineChart,
+    Map,
+    MessageSquarePlus,
+    Plane,
+    Settings,
+    Ticket,
+    TrendingUp,
+    Users,
+    Wallet,
+    type LucideIcon,
+} from 'lucide-react'
 
 export interface NavItem {
     label: string
     path: string
     icon: LucideIcon
+    soon?: boolean
 }
 
 export const NAV_ITEMS: NavItem[] = [
-    { label: 'Overview', path: '/dashboard', icon: LayoutDashboard },
+    { label: 'Plan', path: '/dashboard', icon: MessageSquarePlus },
+    { label: 'Analytics', path: '/dashboard/analytics', icon: LineChart },
     { label: 'My Trips', path: '/dashboard/trips', icon: Map },
+    { label: 'Bookings', path: '/dashboard/bookings', icon: Ticket, soon: true },
+    { label: 'Community', path: '/dashboard/community', icon: Users, soon: true },
+    { label: 'Explore', path: '/dashboard/explore', icon: Compass, soon: true },
 ]
+
+export const SETTINGS_NAV_ITEM: NavItem = {
+    label: 'Settings',
+    path: '/dashboard/settings',
+    icon: Settings,
+    soon: true,
+}
 
 export interface StatDefinition {
     key: string
