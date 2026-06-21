@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
 export const createTripSchema = z.object({
+    userLocationId: z.string().optional(),
+    userLocationLabel: z.string().optional(),
     cityId: z.string().min(1, 'Pick a destination'),
     cityLabel: z.string().min(1),
     numberOfDays: z.number().int().min(1).max(30),
