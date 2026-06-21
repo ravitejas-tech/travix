@@ -8,7 +8,9 @@ This is the command-line utility for the Travix application. It is built as a **
 
 - **Framework**: [NestJS](https://nestjs.com/) (Console Mode)
 - **CLI Commands**: [`nest-commander`](https://jmcdo29.github.io/nest-commander/) for declaring type-safe commands, options, and arguments using decorators.
+  - _Why Nest Commander?_ Allows us to bootstrap a CLI using NestJS's dependency injection container. This lets the CLI directly reuse the backend API's database modules, configurations, commands/queries, and service instances without rewriting boilerplate connection setups.
 - **ORM & Seeders**: [TypeORM](https://typeorm.io/) and [`typeorm-extension`](https://github.com/jorgebodega/typeorm-extension) for schema configuration, connection, and data seeding.
+  - _Why TypeORM & TypeORM Extension?_ Provides native seeder class structures and connection lifecycle management, which lets us trigger complex database seeding (like creating geolocated cities/countries) or custom migrations using CLI arguments.
 - **Formatting**: `chalk` (console colors) and `change-case-all`.
 
 ---

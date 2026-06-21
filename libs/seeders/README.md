@@ -8,7 +8,7 @@ This internal library provides seeding engines and script definitions to populat
 
 - **Framework**: [`typeorm-extension`](https://github.com/jorgebodega/typeorm-extension) seeder architecture.
 - **Geographic Data Source**: `@countrystatecity/countries`
-    - _Why_: Provides comprehensive, structured geographical databases (Countries, States, and Cities) out-of-the-box, saving the effort of manually harvesting lookup arrays.
+    - _Why this package?_ Dynamic AI trip generation and location lookups require a standard, relational database of global countries, states, and cities. Querying external search APIs during autocompletion is slow and subject to rate limits. Syncing `@countrystatecity/countries` data straight into MySQL lets the application support fast, local geolocated autocompletion and enforces relational foreign keys on generated trip destinations.
 - **Database entities**: Imports and inserts records into models defined in `@travix/db`.
 
 ---

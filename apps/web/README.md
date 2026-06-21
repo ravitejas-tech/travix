@@ -7,8 +7,11 @@ This is the interactive frontend application for Travix. It is built as a single
 ## 🛠️ Tech Stack & Libraries
 
 - **Framework**: [React Router v8](https://reactrouter.com/) (formerly Remix v2) running in SPA mode with React 19.
+    - _Why React Router v8?_ Standardized nested routing, layout outlets, page transition indicators, and Vite integration for blazing fast SPA loading and build speeds.
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with `@tailwindcss/vite` integration.
+    - _Why Tailwind CSS v4?_ Offers a compile-time CSS processor that boosts application build speed, with zero configuration files required and seamless CSS-only theme token definitions.
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand) for global token persistence and layout states.
+    - _Why Zustand?_ A lightweight, hook-based state manager that avoids the re-render performance costs and boilerplate complexity of Redux or React Context.
 - **API Fetching**: [TanStack React Query v5](https://tanstack.com/query/latest) + [`react-query-kit`](https://github.com/liaoliao666/react-query-kit) for clean, encapsulated query and mutation hooks.
 - **Animations**: [Framer Motion v12](https://www.framer.com/motion/) for micro-animations, slide-ins, and orchestrations.
 - **Forms**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) validation resolvers.

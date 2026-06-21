@@ -8,7 +8,7 @@ This shared internal library defines the **database schema and TypeORM entities*
 
 - **ORM**: [TypeORM](https://typeorm.io/)
 - **Primary Keys**: Universal Unique Lexicographically Sortable Identifiers (**ULIDs**) via the `ulid` library.
-    - _Why_: Offers lexicographical sorting and high performance while avoiding predictable autoincrementing IDs and space-heavy UUIDs.
+    - _Why ULIDs?_ They offer the best of both worlds: they are 128-bit, cryptographically secure, non-enumerable unique identifiers (preventing predictable ID enumeration attacks), and unlike standard UUIDs (like UUIDv4), they are lexicographically sortable by creation time. This prevents MySQL/MariaDB database index fragmentation and maintains fast write performance on clustered index insertions.
 - **Enums**: Utilizes enums defined in `@travix/shared` to enforce data types at both DB schema and TypeScript levels.
 
 ---

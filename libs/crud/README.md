@@ -9,7 +9,10 @@ It ensures all REST endpoints in the monorepo are type-safe, self-documenting, a
 ## 🛠️ Tech Stack & Selection Rationale
 
 - **Schema Definition**: [@sinclair/typebox](https://github.com/sinclairzx81/typebox)
-    - _Why_: Offers higher runtime execution performance than `class-validator`/`class-transformer` and translates directly to JSON Schema for automatic Swagger/OpenAPI documentation.
+    - _Why TypeBox?_
+        1. **High Runtime Performance**: It compiles schemas into optimized in-memory JavaScript validation functions using `Ajv` under the hood, yielding execution speeds up to 100x faster than standard reflection-based libraries (`class-validator`/`class-transformer`).
+        2. **Single Source of Truth**: Eliminates type duplication. We write a schema definition once, and extract the static TypeScript type using `Static<typeof Schema>`.
+        3. **Declarative OpenAPI Generation**: TypeBox schemas compile directly to standard JSON Schemas, allowing NestJS Swagger utilities to generate complete, interactive OpenAPI definitions automatically without class-level decorators.
 - **Validation**: `validator` for string checks.
 - **NestJS Integrations**: `@nestjs/common` and `@nestjs/swagger` (for custom decorators and OpenAPIs).
 - **Database Pagination**: `typeorm` and `typeorm-extension` for paging data structures.

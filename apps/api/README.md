@@ -7,10 +7,13 @@ This is the core backend API for the Travix application. It is built using **Nes
 ## 🛠️ Tech Stack & Architecture
 
 - **Framework**: [NestJS](https://nestjs.com/) (modular, enterprise-grade architecture).
+  - _Why NestJS?_ It enforces clean architecture via modularity, dependency injection, and a structured layout. This ensures that the CLI and API server can share database configurations, TypeORM entities, and core commands/queries seamlessly.
 - **Architecture Pattern**: **CQRS** via `@nestjs/cqrs` for clean separation of read (Query) and write (Command) logic.
 - **AI Integrations**: [Google Gemini SDK (`@google/genai`)](https://github.com/google/generative-ai-js) for structured JSON generation.
 - **Validation & OpenAPI**: `@sinclair/typebox` and the custom `@travix/crud` library for runtime validation and automatic Swagger Generation.
 - **ORM & Database**: [TypeORM](https://typeorm.io/) connecting to MySQL/MariaDB.
+  - _Why TypeORM?_ Excellent TypeScript compatibility, decorator-based entity mapping, and out-of-the-box integration with `typeorm-extension` for CLI seeding and migrations.
+  - _Why MySQL/MariaDB?_ Relational data consistency is essential for structured trips. We model users, trips, itinerary days, activities, and budget elements with strict foreign keys and transactional updates.
 - **Authentication**: Stateless JWT token authentication with [Passport](http://www.passportjs.org/).
 - **Authorization**: CASL (Attribute-based Access Control).
 - **Logger**: [Pino](https://github.com/pinojs/pino) (`nestjs-pino`) for fast and structured JSON logging.

@@ -8,7 +8,7 @@ This shared internal package consolidates **TypeScript types, enums, constants, 
 
 - **Language**: TypeScript (compiled into ESM and CommonJS outputs via standard `tsconfig`).
 - **AI Schema Types**: [@google/genai](https://github.com/google/generative-ai-js)
-    - _Why_: Shared schemas (like `generationTripSchema`) utilize the official Google Gemini SDK type structures to enforce rigid JSON generation parameters directly on the AI request payload.
+    - _Why Shared AI Schemas?_ Centralizing enums, constants, and structured AI response schemas (like `generationTripSchema`) ensures that the frontend form controls, the API command handlers, and the database entities are perfectly aligned. By using `@google/genai` type definitions, these schemas can be passed directly to Gemini API requests to mathematically guarantee the AI generates JSON matching our database schemas, preventing runtime parser errors.
 - **Date Utilities**: `date-fns` for date math and interval calculations.
 
 ---
