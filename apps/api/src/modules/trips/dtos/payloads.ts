@@ -3,6 +3,9 @@ import { LiteralUnion } from '@travix/crud';
 import { BudgetType, MAX_PAGE_SIZE } from '@travix/shared';
 
 export const CreateTripPayload = Type.Object({
+  userLocationId: Type.Optional(
+    Type.String({ length: 26, example: '01J0X8Z9C0V8Q5K3R7T2M4N6P8' }),
+  ),
   cityId: Type.String({ example: '01J0X8Z9C0V8Q5K3R7T2M4N6P8' }),
   numberOfDays: Type.Integer({ minimum: 1, maximum: 30, example: 5 }),
   budgetType: LiteralUnion(
