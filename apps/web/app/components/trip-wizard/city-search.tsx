@@ -8,9 +8,10 @@ import { useSearchCities } from '~/queries/locations.query'
 interface CitySearchProps {
     value: string
     onSelect: (cityId: string, label: string) => void
+    placeholder?: string
 }
 
-export function CitySearch({ value, onSelect }: CitySearchProps) {
+export function CitySearch({ value, onSelect, placeholder }: CitySearchProps) {
     const [term, setTerm] = useState(value)
     const [open, setOpen] = useState(false)
     const search = useDebounce(term.trim(), 300)
@@ -37,7 +38,7 @@ export function CitySearch({ value, onSelect }: CitySearchProps) {
                         setOpen(true)
                     }}
                     onFocus={() => setOpen(true)}
-                    placeholder="Search a city, e.g. Tokyo"
+                    placeholder={placeholder ?? "Search a city, e.g. Tokyo"}
                     className="w-full bg-transparent text-sm text-primary outline-none placeholder:text-muted/60"
                 />
             </div>
