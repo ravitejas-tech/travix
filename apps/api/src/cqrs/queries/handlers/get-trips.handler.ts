@@ -18,6 +18,8 @@ export class GetTripsHandler implements IQueryHandler<GetTripsQuery> {
       .createQueryBuilder(TripEntity, 'trip')
       .innerJoinAndSelect('trip.city', 'city')
       .innerJoinAndSelect('city.country', 'country')
+      .leftJoinAndSelect('trip.userLocation', 'userLocation')
+      .leftJoinAndSelect('userLocation.country', 'userLocationCountry')
       .leftJoinAndSelect('trip.budget', 'budget')
       .where('trip.userId = :userId', { userId });
 
@@ -71,6 +73,13 @@ export class GetTripsHandler implements IQueryHandler<GetTripsQuery> {
         cityName: trip.city?.name ?? '',
         countryName: trip.city?.country?.name ?? '',
       },
+      userLocation: trip.userLocation
+        ? {
+            cityId: trip.userLocationId!,
+            cityName: trip.userLocation.name,
+            countryName: trip.userLocation.country?.name ?? '',
+          }
+        : null,
       numberOfDays: trip.numberOfDays,
       budgetType: trip.budgetType,
       interests: trip.interests ?? [],
