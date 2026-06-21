@@ -1,8 +1,12 @@
+import { useNavigate } from 'react-router'
+
 import { Button } from '../ui/button'
 import { Reveal } from '../ui/reveal'
 import { StatGrid } from './stat-grid'
 
 export function About() {
+    const navigate = useNavigate()
+
     return (
         <section id="about" className="bg-primary/[0.03] py-24">
             <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-10 lg:grid-cols-2">
@@ -30,7 +34,9 @@ export function About() {
                     </p>
                     <StatGrid />
                     <div>
-                        <Button variant="solid">Start planning free</Button>
+                        <Button variant="solid" onClick={() => navigate('/register')}>
+                            Start planning free
+                        </Button>
                     </div>
                 </Reveal>
             </div>

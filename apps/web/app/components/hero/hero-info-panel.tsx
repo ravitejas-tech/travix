@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowRight, MapPin, Sparkles } from 'lucide-react'
+import { ArrowRight, MapPin } from 'lucide-react'
+import { useNavigate } from 'react-router'
 import { Button } from '../ui/button'
 import { CarouselDots } from './carousel-dots'
 import { HERO_SLIDES } from '~/data/hero.constants'
@@ -10,6 +11,7 @@ interface HeroInfoPanelProps {
 }
 
 export function HeroInfoPanel({ active, onSelect }: HeroInfoPanelProps) {
+    const navigate = useNavigate()
     const slide = HERO_SLIDES[active]
 
     return (
@@ -39,11 +41,8 @@ export function HeroInfoPanel({ active, onSelect }: HeroInfoPanelProps) {
             </AnimatePresence>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
-                <Button>
+                <Button onClick={() => navigate('/register')}>
                     Start planning <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost">
-                    <Sparkles className="h-4 w-4" /> See a demo
                 </Button>
             </div>
 
