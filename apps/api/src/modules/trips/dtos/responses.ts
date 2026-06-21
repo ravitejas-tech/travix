@@ -6,9 +6,13 @@ import { ItineraryDayResponse } from 'api/modules/itinerary/dtos/responses';
 
 export const BudgetResponse = Type.Object({
   flights: Nullable(Type.Number()),
+  flightsDescription: Nullable(Type.String()),
   accommodation: Nullable(Type.Number()),
+  accommodationDescription: Nullable(Type.String()),
   food: Nullable(Type.Number()),
+  foodDescription: Nullable(Type.String()),
   activities: Nullable(Type.Number()),
+  activitiesDescription: Nullable(Type.String()),
   total: Type.Number(),
   currencyCode: Type.String(),
   currencySymbol: Type.String(),
@@ -23,6 +27,7 @@ const DestinationResponse = Type.Object({
 export const TripSummaryResponse = Type.Object({
   id: Type.String(),
   destination: DestinationResponse,
+  userLocation: Nullable(DestinationResponse),
   numberOfDays: Type.Integer(),
   budgetType: LiteralUnion(
     Object.values(BudgetType) as [BudgetType, ...BudgetType[]],
