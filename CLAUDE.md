@@ -4,6 +4,8 @@ Strict rulebook for consistency. Follow without exception. If unclear, check exi
 
 - File naming: kebab-case everywhere (`user-card.tsx`, `create-user.command.ts`). No PascalCase/camelCase filenames.
 - One file = one responsibility. Don't mix UI, logic, types, constants in one file.
+- Color theme (web): **white background, blue primary text, gray body text, white secondary text.** Use the design tokens defined in `app.css` `@theme` — `text-primary`/`bg-primary` (brand blue, for headings/accents/links/buttons), `text-muted` (neutral gray, for paragraphs and supporting copy), `text-secondary`/`bg-secondary` (white, for text over colored/image backgrounds), `bg-background` (white). Never hardcode hex colors or ad-hoc grays for these roles — use `text-muted` rather than `text-primary/60` or a raw `text-gray-*` for body text. New sections default to the white theme with blue headings and gray paragraphs.
+- Typography: **Poppins is the only font, used everywhere.** Set it once globally (web: the `--font-sans` theme token in `app.css`, loaded via the Google Fonts link in `root.tsx`) and inherit it — never hardcode a different `font-family` or per-component font on any element.
 
 ## API (NestJS + TypeORM + CQRS)
 
@@ -62,6 +64,8 @@ Strict rulebook for consistency. Follow without exception. If unclear, check exi
 - API calls: only `createQuery`/`createMutation` from `react-query-kit`. Never raw `useQuery`/`useMutation` in components.
 - State: prefer local state or URL params. Zustand only for true global state.
 - Components: small, focused, typed props. No business logic or API calls inside queries.
+- **File size cap: no file exceeds 150 lines.** When a component grows past that, split it into smaller focused components, each in its own file — one file = one visual/behavioral responsibility (a panel, a list item, a control). Co-locate a feature's components in a `components/<feature>/` folder (e.g. `components/hero/`). Non-component files are **not** kept beside components — they go in app-level shared folders: hooks in `app/hooks/` (`use-*.ts`), constants/static data in `app/data/` (`*.constants.ts`), and types in `app/types/` (`*.types.ts`). Never inline them in component files. Import them with the `~/*` alias (`~/data/...`, `~/hooks/...`, `~/types/...`), not deep relative paths. Truly shared primitives (e.g. `Button`) live in `components/ui/`.
+- Animations: use `framer-motion` for transitions/entrances. Keep each animation's config local to the component it animates.
 - File separation: `*.types.ts`, `*.schema.ts` (Zod), `*.query.ts`, `*.constants.ts`, `*.store.ts`, `*.data.ts`, `use-*.ts`.
 - Error handling: reusable `<LoadingScreen/>` / `<ErrorScreen/>`; always toast on mutation success/error.
 - Forms: react-hook-form + Zod only. No per-field `useState`.
