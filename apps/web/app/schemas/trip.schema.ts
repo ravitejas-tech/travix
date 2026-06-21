@@ -6,7 +6,7 @@ export const createTripSchema = z.object({
     numberOfDays: z.number().int().min(1).max(30),
     budgetType: z.enum(['low', 'medium', 'high']),
     interests: z.array(z.string()).min(1, 'Pick at least one interest'),
-    currencyCode: z.string().length(3).default('USD'),
+    currencyCode: z.string().length(3),
 })
 
 export const addActivitySchema = z.object({
