@@ -25,9 +25,13 @@ export const generationBudgetSchema = {
     type: SchemaType.OBJECT,
     properties: {
         flights: { type: SchemaType.NUMBER, nullable: true },
+        flightsDescription: { type: SchemaType.STRING, nullable: true },
         accommodation: { type: SchemaType.NUMBER, nullable: true },
+        accommodationDescription: { type: SchemaType.STRING, nullable: true },
         food: { type: SchemaType.NUMBER, nullable: true },
+        foodDescription: { type: SchemaType.STRING, nullable: true },
         activities: { type: SchemaType.NUMBER, nullable: true },
+        activitiesDescription: { type: SchemaType.STRING, nullable: true },
         total: { type: SchemaType.NUMBER },
     },
     required: ['total'],
