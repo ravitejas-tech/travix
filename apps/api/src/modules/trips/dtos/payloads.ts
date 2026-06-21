@@ -27,3 +27,9 @@ export const LimitQuery = Type.Integer({
   maximum: MAX_PAGE_SIZE,
   default: 20,
 });
+export const SearchQuery = Type.String({ example: 'Tokyo' });
+export const SortQuery = LiteralUnion(['recent', 'budget_high', 'budget_low'], {
+  default: 'recent',
+  example: 'budget_high',
+});
+export type TripSort = (typeof SortQuery)['static'];
