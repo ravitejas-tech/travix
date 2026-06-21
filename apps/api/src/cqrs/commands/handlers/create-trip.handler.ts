@@ -34,12 +34,22 @@ export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
     const { payload } = command;
     const currencyCode = payload.currencyCode ?? 'USD';
 
-    const [city, currency] = await Promise.all([
+    const [city, currency, userLocationCity] = await Promise.all([
       this.resolveCity(this.datasource.manager, payload.cityId),
       this.resolveCurrency(this.datasource.manager, currencyCode),
+      payload.userLocationId
+        ? this.resolveCity(this.datasource.manager, payload.userLocationId)
+        : Promise.resolve(null),
     ]);
 
+    const userLocationName = userLocationCity
+      ? (userLocationCity.country
+          ? `${userLocationCity.name}, ${userLocationCity.country.name}`
+          : userLocationCity.name)
+      : '';
+
     const generated = await this.generationService.generateTrip({
+      userLocation: userLocationName,
       destination: city.country
         ? `${city.name}, ${city.country.name}`
         : city.name,
@@ -54,6 +64,7 @@ export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
     );
 
     persisted.trip.city = city;
+    persisted.trip.userLocation = userLocationCity;
     return this.buildDetail(persisted, currency);
   }
 
@@ -97,6 +108,7 @@ export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
         numberOfDays: payload.numberOfDays,
         budgetType: payload.budgetType,
         interests: payload.interests,
+        userLocationId: payload.userLocationId || null,
         status: TripStatus.ACTIVE,
       }),
     );
@@ -132,9 +144,13 @@ export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
         tripId: trip.id,
         currencyId: currency.id,
         flights: generated.budget.flights,
+        flightsDescription: generated.budget.flightsDescription,
         accommodation: generated.budget.accommodation,
+        accommodationDescription: generated.budget.accommodationDescription,
         food: generated.budget.food,
+        foodDescription: generated.budget.foodDescription,
         activities: generated.budget.activities,
+        activitiesDescription: generated.budget.activitiesDescription,
         total: generated.budget.total,
       }),
     );
@@ -164,6 +180,13 @@ export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
         cityName: trip.city?.name ?? '',
         countryName: trip.city?.country?.name ?? '',
       },
+      userLocation: trip.userLocation
+        ? {
+            cityId: trip.userLocationId!,
+            cityName: trip.userLocation.name,
+            countryName: trip.userLocation.country?.name ?? '',
+          }
+        : null,
       numberOfDays: trip.numberOfDays,
       budgetType: trip.budgetType,
       interests: trip.interests ?? [],
@@ -185,9 +208,13 @@ export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
       })),
       budget: {
         flights: this.toNumber(budget.flights),
+        flightsDescription: budget.flightsDescription,
         accommodation: this.toNumber(budget.accommodation),
+        accommodationDescription: budget.accommodationDescription,
         food: this.toNumber(budget.food),
+        foodDescription: budget.foodDescription,
         activities: this.toNumber(budget.activities),
+        activitiesDescription: budget.activitiesDescription,
         total: Number(budget.total),
         currencyCode: currency.code,
         currencySymbol: currency.symbol,
