@@ -50,7 +50,7 @@ export const BUDGET_OPTIONS: {
 }[] = [
     {
         value: 'low',
-        label: 'Budget',
+        label: 'Economy',
         description: 'Hostels & street food',
         icon: Wallet,
     },
@@ -82,7 +82,15 @@ export const HOTEL_CATEGORY_META: Record<HotelCategory, { label: string; classNa
 }
 
 export const BUDGET_LABEL: Record<BudgetValue, string> = {
-    low: 'Budget',
+    low: 'Economy',
     medium: 'Balanced',
     high: 'Luxury',
 }
+
+export type TripSortValue = 'recent' | 'budget_high' | 'budget_low'
+
+export const TRIP_SORT_OPTIONS: { value: TripSortValue; label: string }[] = [
+    { value: 'recent', label: 'Most recent' },
+    { value: 'budget_high', label: 'Budget: high to low' },
+    { value: 'budget_low', label: 'Budget: low to high' },
+]
