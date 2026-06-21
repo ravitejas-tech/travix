@@ -1,6 +1,7 @@
 import { ActivityType, BudgetType, HotelCategory } from '../enums'
 
 export interface GenerationContext {
+    userLocation: string
     destination: string
     numberOfDays: number
     budgetType: BudgetType
@@ -22,9 +23,13 @@ export interface GeneratedDay {
 
 export interface GeneratedBudget {
     flights: number | null
+    flightsDescription: string | null
     accommodation: number | null
+    accommodationDescription: string | null
     food: number | null
+    foodDescription: string | null
     activities: number | null
+    activitiesDescription: string | null
     total: number
 }
 
