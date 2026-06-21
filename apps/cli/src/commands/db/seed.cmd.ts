@@ -33,8 +33,10 @@ export class SeedDbCommand extends CommandRunner {
 
       await runSeeders(this.dataSource, { seeds, seedTracking: false });
       this.logger.log('Seeding complete.');
-    } catch (err) {
-      this.logger.error('Seeding error:', err);
+    } catch (err: any) {
+      this.logger.error(`Seeding failed: ${err?.message ?? err}`);
+      if (err?.stack) this.logger.error(err.stack);
+      throw err;
     } finally {
       if (this.dataSource?.isInitialized) await this.dataSource.destroy();
     }
