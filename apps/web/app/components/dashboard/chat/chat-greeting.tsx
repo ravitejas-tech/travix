@@ -15,9 +15,7 @@ export function ChatGreeting() {
             className="text-center"
         >
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">{getGreeting()}</p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-                Where to next, {name}?
-            </h1>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">Where to next, {name}?</h1>
             <p className="mx-auto mt-3 max-w-md text-sm text-muted">
                 Tell Travix a destination and get a complete day-by-day itinerary, hotels and budget in seconds.
             </p>

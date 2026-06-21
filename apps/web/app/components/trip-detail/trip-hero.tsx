@@ -52,9 +52,7 @@ export function TripHero({ trip, onDelete, deleting }: TripHeroProps) {
                 <div className="mt-5 flex flex-wrap gap-2">
                     <Chip icon={<CalendarDays className="h-4 w-4" />}>{trip.numberOfDays} days</Chip>
                     <Chip icon={<Wallet className="h-4 w-4" />}>{BUDGET_LABEL[trip.budgetType]}</Chip>
-                    {trip.total != null && (
-                        <Chip>{formatMoney(trip.total, trip.budget?.currencySymbol ?? '$')}</Chip>
-                    )}
+                    {trip.total != null && <Chip>{formatMoney(trip.total, trip.budget?.currencySymbol ?? '$')}</Chip>}
                 </div>
 
                 {trip.interests.length > 0 && (
