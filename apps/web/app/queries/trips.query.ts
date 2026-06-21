@@ -9,9 +9,14 @@ import {
 } from '~/api'
 import { queryClient } from '~/lib/query-client'
 
-export const useTrips = createQuery<V1TripsControllerListResponse, void, Error>({
+export type TripSort = 'recent' | 'budget_high' | 'budget_low'
+
+export const useTrips = createQuery<V1TripsControllerListResponse, { search?: string; sort?: TripSort }, Error>({
     queryKey: ['trips', 'list'],
-    fetcher: () => client.v1.listV1Trips({ limit: 50 }).then((res) => res.data),
+    fetcher: ({ search, sort } = {}) =>
+        client.v1
+            .listV1Trips({ limit: 50, search: search?.trim() || undefined, sort })
+            .then((res) => res.data),
 })
 
 export const useTrip = createQuery<V1TripsControllerDetailResponse, { tripId: string }, Error>({
