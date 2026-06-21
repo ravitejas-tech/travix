@@ -49,3 +49,10 @@ export const STAT_DEFINITIONS: StatDefinition[] = [
     { key: 'totalBudget', label: 'Total Budget', icon: Wallet, color: 'text-violet-500 bg-violet-50' },
     { key: 'countries', label: 'Countries', icon: Globe, color: 'text-amber-500 bg-amber-50' },
 ]
+
+export const STAT_DESCRIPTIONS: Record<string, string> = {
+    'Total Trips': 'All planned journeys',
+    'Active Trips': 'Ready to travel',
+    'Total Budget': 'Accumulated cost',
+    Countries: 'Different countries',
+}

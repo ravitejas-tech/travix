@@ -2,19 +2,13 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 import { RobotMascot } from '~/components/dashboard/chat/robot-mascot'
-
-const MESSAGES = [
-    'Scouting the best spots…',
-    'Crafting your day-by-day plan…',
-    'Estimating your budget…',
-    'Picking places to stay…',
-]
+import { GENERATING_MESSAGES } from '~/data/trip-wizard.constants'
 
 export function GeneratingOverlay() {
     const [index, setIndex] = useState(0)
 
     useEffect(() => {
-        const id = setInterval(() => setIndex((i) => (i + 1) % MESSAGES.length), 1800)
+        const id = setInterval(() => setIndex((i) => (i + 1) % GENERATING_MESSAGES.length), 1800)
         return () => clearInterval(id)
     }, [])
 
@@ -33,14 +27,14 @@ export function GeneratingOverlay() {
                             exit={{ opacity: 0, y: -8 }}
                             className="text-sm text-muted"
                         >
-                            {MESSAGES[index]}
+                            {GENERATING_MESSAGES[index]}
                         </motion.p>
                     </AnimatePresence>
                 </div>
             </div>
 
             <div className="flex gap-1.5">
-                {MESSAGES.map((_, i) => (
+                {GENERATING_MESSAGES.map((_, i) => (
                     <span
                         key={i}
                         className={`h-1.5 w-1.5 rounded-full transition-colors ${

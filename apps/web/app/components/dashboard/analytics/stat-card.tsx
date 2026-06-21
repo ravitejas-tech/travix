@@ -1,19 +1,14 @@
 import { motion } from 'framer-motion'
 import type { LucideIcon } from 'lucide-react'
 
+import { STAT_DESCRIPTIONS } from '~/data/dashboard.constants'
+
 interface StatCardProps {
     label: string
     value: string | number
     icon: LucideIcon
     color: string
     index: number
-}
-
-const DESCRIPTIONS: Record<string, string> = {
-    'Total Trips': 'All planned journeys',
-    'Active Trips': 'Ready to travel',
-    'Total Budget': 'Accumulated cost',
-    Countries: 'Different countries',
 }
 
 export function StatCard({ label, value, icon: Icon, color, index }: StatCardProps) {
@@ -52,7 +47,7 @@ export function StatCard({ label, value, icon: Icon, color, index }: StatCardPro
                 <p className="mt-4 text-2xl font-extrabold tracking-tight text-primary">{value}</p>
                 <div className="mt-1">
                     <p className="text-xs font-bold text-primary/80">{label}</p>
-                    <p className="text-[10px] text-muted/70">{DESCRIPTIONS[label] ?? 'Calculated stats'}</p>
+                    <p className="text-[10px] text-muted/70">{STAT_DESCRIPTIONS[label] ?? 'Calculated stats'}</p>
                 </div>
             </div>
         </motion.div>

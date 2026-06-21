@@ -3,15 +3,10 @@ import { ArrowRight, CalendarDays, MapPin, Flag, PlaneTakeoff } from 'lucide-rea
 import { Link } from 'react-router'
 
 import type { V1TripsControllerListResponse } from '~/api'
-import { BUDGET_LABEL, type BudgetValue } from '~/data/trip.constants'
+import { BUDGET_HERO_GRADIENTS } from '~/data/analytics.constants'
+import { BUDGET_LABEL } from '~/data/trip.constants'
 import { formatMoney } from '~/lib/format'
-import { StatusBadge } from './status-badge'
-
-const GRADIENTS: Record<BudgetValue, string> = {
-    low: 'from-emerald-500 to-teal-600',
-    medium: 'from-sky-500 to-primary',
-    high: 'from-violet-600 to-fuchsia-600',
-}
+import { StatusBadge } from '~/components/ui/status-badge'
 
 interface RecentTripsProps {
     trips: V1TripsControllerListResponse['items']
@@ -49,7 +44,7 @@ export function RecentTrips({ trips }: RecentTripsProps) {
                             className="group block overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20"
                         >
                             <div
-                                className={`h-24 bg-gradient-to-br ${GRADIENTS[trip.budgetType]} p-4 relative overflow-hidden`}
+                                className={`h-24 bg-gradient-to-br ${BUDGET_HERO_GRADIENTS[trip.budgetType]} p-4 relative overflow-hidden`}
                             >
                                 <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                                 <div className="flex items-start justify-between relative z-10">

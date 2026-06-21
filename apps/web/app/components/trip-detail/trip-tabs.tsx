@@ -1,31 +1,23 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { CalendarDays, Hotel, Wallet } from 'lucide-react'
 import { useState } from 'react'
 
 import type { V1TripsControllerDetailResponse } from '~/api'
+import { TRIP_DETAIL_TABS, type TripTabKey } from '~/data/trip-detail.constants'
 import { BudgetBreakdown } from './budget-breakdown'
 import { HotelsList } from './hotels-list'
 import { ItineraryTimeline } from './itinerary-timeline'
-
-const TABS = [
-    { key: 'itinerary', label: 'Itinerary', icon: CalendarDays },
-    { key: 'budget', label: 'Budget', icon: Wallet },
-    { key: 'hotels', label: 'Hotels', icon: Hotel },
-] as const
-
-type TabKey = (typeof TABS)[number]['key']
 
 interface TripTabsProps {
     trip: V1TripsControllerDetailResponse
 }
 
 export function TripTabs({ trip }: TripTabsProps) {
-    const [active, setActive] = useState<TabKey>('itinerary')
+    const [active, setActive] = useState<TripTabKey>('itinerary')
 
     return (
         <div className="mt-6">
             <div className="flex gap-1 rounded-full border border-gray-100 bg-white p-1 shadow-sm">
-                {TABS.map((tab) => {
+                {TRIP_DETAIL_TABS.map((tab) => {
                     const Icon = tab.icon
                     const isActive = active === tab.key
                     return (

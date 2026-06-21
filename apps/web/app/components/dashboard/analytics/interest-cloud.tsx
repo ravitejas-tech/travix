@@ -1,33 +1,12 @@
 import { motion } from 'framer-motion'
-import {
-    Camera,
-    Compass,
-    Landmark,
-    Leaf,
-    Moon,
-    Mountain,
-    ShoppingBag,
-    Sparkles,
-    Utensils,
-    type LucideIcon,
-} from 'lucide-react'
+import { Compass } from 'lucide-react'
 import { useMemo } from 'react'
 
 import type { V1TripsControllerListResponse } from '~/api'
+import { INTEREST_CLOUD_META } from '~/data/analytics.constants'
 
 interface InterestCloudProps {
     trips: V1TripsControllerListResponse['items']
-}
-
-const INTEREST_META: Record<string, { label: string; icon: LucideIcon; colors: string }> = {
-    food: { label: 'Food', icon: Utensils, colors: 'bg-orange-50 border-orange-100 text-orange-700' },
-    culture: { label: 'Culture', icon: Landmark, colors: 'bg-violet-50 border-violet-100 text-violet-700' },
-    adventure: { label: 'Adventure', icon: Mountain, colors: 'bg-emerald-50 border-emerald-100 text-emerald-700' },
-    shopping: { label: 'Shopping', icon: ShoppingBag, colors: 'bg-rose-50 border-rose-100 text-rose-700' },
-    sightseeing: { label: 'Sightseeing', icon: Camera, colors: 'bg-sky-50 border-sky-100 text-sky-700' },
-    nature: { label: 'Nature', icon: Leaf, colors: 'bg-teal-50 border-teal-100 text-teal-700' },
-    nightlife: { label: 'Nightlife', icon: Moon, colors: 'bg-indigo-50 border-indigo-100 text-indigo-700' },
-    relaxation: { label: 'Relaxation', icon: Sparkles, colors: 'bg-amber-50 border-amber-100 text-amber-700' },
 }
 
 export function InterestCloud({ trips }: InterestCloudProps) {
@@ -59,7 +38,7 @@ export function InterestCloud({ trips }: InterestCloudProps) {
 
             <div className="flex flex-wrap gap-2.5">
                 {interests.map(([name, count], i) => {
-                    const meta = INTEREST_META[name] || {
+                    const meta = INTEREST_CLOUD_META[name] || {
                         label: name,
                         icon: Compass,
                         colors: 'bg-slate-50 border-slate-100 text-slate-700',

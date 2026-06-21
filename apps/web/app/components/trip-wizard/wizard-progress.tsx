@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-const STEPS = ['Destination', 'Trip details', 'Interests']
+import { WIZARD_STEPS } from '~/data/trip-wizard.constants'
 
 interface WizardProgressProps {
     current: number
@@ -9,7 +9,7 @@ interface WizardProgressProps {
 export function WizardProgress({ current }: WizardProgressProps) {
     return (
         <div className="flex items-center gap-2">
-            {STEPS.map((label, i) => (
+            {WIZARD_STEPS.map((label, i) => (
                 <div key={label} className="flex flex-1 flex-col gap-1.5">
                     <div className="h-1.5 overflow-hidden rounded-full bg-gray-100">
                         <motion.div

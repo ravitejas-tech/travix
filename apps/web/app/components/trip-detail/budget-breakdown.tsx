@@ -1,17 +1,10 @@
 import { motion } from 'framer-motion'
-import { Bed, Plane, Ticket, Utensils, type LucideIcon } from 'lucide-react'
 
 import type { V1TripsControllerDetailResponse } from '~/api'
+import { BUDGET_BREAKDOWN_ROWS } from '~/data/trip-detail.constants'
 import { formatMoney } from '~/lib/format'
 
 type Budget = NonNullable<V1TripsControllerDetailResponse['budget']>
-
-const ROWS: { key: keyof Budget; label: string; icon: LucideIcon }[] = [
-    { key: 'flights', label: 'Flights', icon: Plane },
-    { key: 'accommodation', label: 'Accommodation', icon: Bed },
-    { key: 'food', label: 'Food', icon: Utensils },
-    { key: 'activities', label: 'Activities', icon: Ticket },
-]
 
 interface BudgetBreakdownProps {
     budget: Budget | null | undefined
@@ -27,7 +20,7 @@ export function BudgetBreakdown({ budget }: BudgetBreakdownProps) {
     return (
         <div className="mx-auto max-w-xl rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
             <div className="flex flex-col gap-3">
-                {ROWS.map((row, i) => {
+                {BUDGET_BREAKDOWN_ROWS.map((row, i) => {
                     const value = budget[row.key] as number | null | undefined
                     const pct = budget.total ? ((value ?? 0) / budget.total) * 100 : 0
                     const Icon = row.icon

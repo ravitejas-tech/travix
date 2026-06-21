@@ -2,8 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { Outlet } from 'react-router'
 
-import { MobileHeader } from '../../components/dashboard/mobile-header'
-import { Sidebar } from '../../components/dashboard/sidebar'
+import { MobileHeader } from '../../components/dashboard/sidebar/mobile-header'
+import { Sidebar } from '../../components/dashboard/sidebar/sidebar'
 import { useRequireAuth } from '~/hooks/use-require-auth'
 
 export default function DashboardLayout() {

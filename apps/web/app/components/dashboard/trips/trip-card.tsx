@@ -3,17 +3,12 @@ import { CalendarDays, MapPin, Trash2 } from 'lucide-react'
 import { Link } from 'react-router'
 
 import type { V1TripsControllerListResponse } from '~/api'
-import { BUDGET_LABEL, type BudgetValue } from '~/data/trip.constants'
+import { BUDGET_LABEL } from '~/data/trip.constants'
+import { BUDGET_CARD_GRADIENTS } from '~/data/trips.constants'
 import { formatMoney } from '~/lib/format'
-import { StatusBadge } from './status-badge'
+import { StatusBadge } from '~/components/ui/status-badge'
 
 type Trip = V1TripsControllerListResponse['items'][number]
-
-const GRADIENTS: Record<BudgetValue, string> = {
-    low: 'from-emerald-400 to-teal-500',
-    medium: 'from-sky-400 to-primary',
-    high: 'from-violet-500 to-fuchsia-500',
-}
 
 interface TripCardProps {
     trip: Trip
@@ -34,7 +29,7 @@ export function TripCard({ trip, onDelete, deleting }: TripCardProps) {
             className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-xl hover:shadow-primary/10"
         >
             <Link to={`/dashboard/trips/${trip.id}`} className="block">
-                <div className={`relative h-28 bg-gradient-to-br ${GRADIENTS[trip.budgetType]} p-4`}>
+                <div className={`relative h-28 bg-gradient-to-br ${BUDGET_CARD_GRADIENTS[trip.budgetType]} p-4`}>
                     <div className="absolute right-3 top-3">
                         <StatusBadge status={trip.status} />
                     </div>

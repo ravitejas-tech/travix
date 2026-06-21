@@ -1,15 +1,9 @@
 import { motion } from 'framer-motion'
-import { BarChart3 } from 'lucide-react'
 import { useMemo } from 'react'
 
 import type { V1TripsControllerListResponse } from '~/api'
+import { BUDGET_DISTRIBUTION_COLORS } from '~/data/analytics.constants'
 import type { BudgetValue } from '~/data/trip.constants'
-
-const BUDGET_COLORS: Record<BudgetValue, { bar: string; dot: string; label: string }> = {
-    low: { bar: 'bg-gradient-to-r from-emerald-400 to-teal-500', dot: 'bg-emerald-500', label: 'Economy Class' },
-    medium: { bar: 'bg-gradient-to-r from-sky-400 to-primary', dot: 'bg-sky-500', label: 'Balanced Class' },
-    high: { bar: 'bg-gradient-to-r from-violet-500 to-fuchsia-500', dot: 'bg-violet-500', label: 'Luxury Class' },
-}
 
 interface BudgetOverviewProps {
     trips: V1TripsControllerListResponse['items']
@@ -24,7 +18,7 @@ export function BudgetOverview({ trips }: BudgetOverviewProps) {
             key,
             count: counts[key],
             pct: (counts[key] / total) * 100,
-            ...BUDGET_COLORS[key],
+            ...BUDGET_DISTRIBUTION_COLORS[key],
         }))
     }, [trips])
 

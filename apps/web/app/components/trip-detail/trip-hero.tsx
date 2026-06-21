@@ -3,7 +3,7 @@ import { ArrowLeft, CalendarDays, MapPin, Trash2, Wallet } from 'lucide-react'
 import { Link } from 'react-router'
 
 import type { V1TripsControllerDetailResponse } from '~/api'
-import { StatusBadge } from '~/components/dashboard/status-badge'
+import { StatusBadge } from '~/components/ui/status-badge'
 import { BUDGET_LABEL } from '~/data/trip.constants'
 import { formatMoney } from '~/lib/format'
 

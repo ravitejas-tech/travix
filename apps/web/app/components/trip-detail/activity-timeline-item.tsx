@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
-import { X, type LucideIcon } from 'lucide-react'
+import { X } from 'lucide-react'
 
 import type { V1TripsControllerDetailResponse } from '~/api'
-import { ACTIVITY_TYPE_META, type ActivityTypeValue } from '~/data/trip.constants'
+import { ACTIVITY_TYPE_META } from '~/data/trip.constants'
+import { ACTIVITY_TYPE_STYLES } from '~/data/trip-detail.constants'
 
 type Activity = V1TripsControllerDetailResponse['days'][number]['activities'][number]
 
@@ -12,49 +13,10 @@ interface ActivityTimelineItemProps {
     removing: boolean
 }
 
-const CATEGORY_STYLES: Record<ActivityTypeValue, { border: string; bg: string; iconBg: string; text: string }> = {
-    food: {
-        border: 'border-l-orange-400 hover:border-orange-500',
-        bg: 'bg-orange-50/30',
-        iconBg: 'bg-orange-100 text-orange-600',
-        text: 'text-orange-900',
-    },
-    culture: {
-        border: 'border-l-violet-400 hover:border-violet-500',
-        bg: 'bg-violet-50/30',
-        iconBg: 'bg-violet-100 text-violet-600',
-        text: 'text-violet-900',
-    },
-    adventure: {
-        border: 'border-l-emerald-400 hover:border-emerald-500',
-        bg: 'bg-emerald-50/30',
-        iconBg: 'bg-emerald-100 text-emerald-600',
-        text: 'text-emerald-900',
-    },
-    shopping: {
-        border: 'border-l-rose-400 hover:border-rose-500',
-        bg: 'bg-rose-50/30',
-        iconBg: 'bg-rose-100 text-rose-600',
-        text: 'text-rose-900',
-    },
-    sightseeing: {
-        border: 'border-l-sky-400 hover:border-sky-500',
-        bg: 'bg-sky-50/30',
-        iconBg: 'bg-sky-100 text-sky-600',
-        text: 'text-sky-900',
-    },
-    other: {
-        border: 'border-l-slate-400 hover:border-slate-500',
-        bg: 'bg-slate-50/30',
-        iconBg: 'bg-slate-100 text-slate-600',
-        text: 'text-slate-900',
-    },
-}
-
 export function ActivityTimelineItem({ activity, onRemove, removing }: ActivityTimelineItemProps) {
     const meta = ACTIVITY_TYPE_META[activity.type] || ACTIVITY_TYPE_META.other
     const Icon = meta.icon
-    const styles = CATEGORY_STYLES[activity.type] || CATEGORY_STYLES.other
+    const styles = ACTIVITY_TYPE_STYLES[activity.type] || ACTIVITY_TYPE_STYLES.other
 
     return (
         <motion.li
