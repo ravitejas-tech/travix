@@ -10,11 +10,11 @@ Strict rulebook for consistency. Follow without exception. If unclear, check exi
 ## API (NestJS + TypeORM + CQRS)
 
 - Folder layout (mirror exactly):
-  - `src/cqrs/commands/impl/*.command.ts` + `src/cqrs/commands/handlers/*.handler.ts` — CQRS is **centralized at the app level**, never nested inside a module.
-  - `src/cqrs/queries/impl/*.query.ts` + `src/cqrs/queries/handlers/*.handler.ts` — same, for reads.
-  - `src/strategies/`, `src/guards/`, `src/decorators/`, `src/middlewares/`, `src/config/`, `src/utils/`.
-  - `src/modules/<feature>/` contains **only**: `<feature>.module.ts`, `controllers/v1/*.controller.ts`, `dtos/payloads.ts`, `dtos/responses.ts`. No commands/handlers/queries inside modules. **No feature "mapper/business" services** — that logic belongs in the CQRS handler. A `services/` folder is allowed only for genuine integrations/cross-cutting clients (e.g. `auth/services/token.service.ts`, `generation/services/*` calling an external API), never for entity→DTO mapping or ownership checks.
-  - The module's `*.module.ts` imports its handlers from `api/cqrs/...` and registers them in `providers`.
+    - `src/cqrs/commands/impl/*.command.ts` + `src/cqrs/commands/handlers/*.handler.ts` — CQRS is **centralized at the app level**, never nested inside a module.
+    - `src/cqrs/queries/impl/*.query.ts` + `src/cqrs/queries/handlers/*.handler.ts` — same, for reads.
+    - `src/strategies/`, `src/guards/`, `src/decorators/`, `src/middlewares/`, `src/config/`, `src/utils/`.
+    - `src/modules/<feature>/` contains **only**: `<feature>.module.ts`, `controllers/v1/*.controller.ts`, `dtos/payloads.ts`, `dtos/responses.ts`. No commands/handlers/queries inside modules. **No feature "mapper/business" services** — that logic belongs in the CQRS handler. A `services/` folder is allowed only for genuine integrations/cross-cutting clients (e.g. `auth/services/token.service.ts`, `generation/services/*` calling an external API), never for entity→DTO mapping or ownership checks.
+    - The module's `*.module.ts` imports its handlers from `api/cqrs/...` and registers them in `providers`.
 - **Strict CQRS — no exceptions.** Every endpoint (read and write) goes through the bus: writes → `CommandBus` + a command handler; reads → `QueryBus` + a query handler. Controllers are request/response only: build the command/query with `Builder(...)` and call the bus. **Never** `@InjectDataSource()` / run a query / map / check ownership in a controller. All business logic (DB access, ownership/`NotFound` checks, entity→DTO mapping, generation-context building) lives inside handlers; duplicate small mappers across handlers rather than reintroducing a shared service.
 - Commands/queries extend the typed base: `class XCommand extends Command<Result> { public readonly payload: Static<typeof Payload> }` / `class XQuery extends Query<Result> {}`. Construct with `Builder(XCommand, { payload }).build()` from `@travix/shared` — never `new`.
 - Import across top-level folders with the `api/*` path alias (`api/cqrs/...`, `api/guards/...`), not deep relative paths.
@@ -39,10 +39,10 @@ Strict rulebook for consistency. Follow without exception. If unclear, check exi
 - Build schemas with `Type.*` from `@sinclair/typebox`; use the `@travix/crud` helpers (`Nullable`, `LiteralUnion`, `IsoDate`, etc.) instead of hand-rolling. `Nullable(x)` = optional + nullable.
 - Derive the static type with `Static<typeof Schema>` — never duplicate a DTO as a hand-written interface.
 - Every route is declared with the `@HttpEndpoint({ method, path, validate })` decorator from `@travix/crud` — never the bare `@Get`/`@Post`/`@Body`/`@Query`/`@Param` decorators.
-  - `validate.request`: array of `{ type: 'body' | 'query' | 'param', schema, name?, required? }`. Validated args are injected positionally in the same order, before any `@`-decorated params.
-  - `validate.response`: `{ schema, responseCode? }`. The response is auto-validated and stripped to the schema by `TypeboxTransformInterceptor` — do not manually `Value.Parse` in the controller.
+    - `validate.request`: array of `{ type: 'body' | 'query' | 'param', schema, name?, required? }`. Validated args are injected positionally in the same order, before any `@`-decorated params.
+    - `validate.response`: `{ schema, responseCode? }`. The response is auto-validated and stripped to the schema by `TypeboxTransformInterceptor` — do not manually `Value.Parse` in the controller.
 - Pagination (inside the query handler): build a query builder and call `paginateQueryBuilder(qb, { page, limit })` (or `paginateRaw` for raw selects) from `@travix/crud`; return its `{ items, meta, links }` directly, mapping `items` when the response DTO differs from the entity. Response schema is `PaginatedResponse(ItemSchema)`. The controller passes `page`/`limit` (optional `coerceTypes: true` query validators) into the query.
-  - Set `auth: true` for protected routes (adds the Swagger bearer marker); pair it with `@UseGuards(JwtAuthGuard)`.
+    - Set `auth: true` for protected routes (adds the Swagger bearer marker); pair it with `@UseGuards(JwtAuthGuard)`.
 - Validation/format setup lives in `main.ts` via `configureNestJsTypebox({ patchSwagger: true, setFormats: true })`. Add new string formats in `libs/crud/src/formats.ts`, not per-schema.
 - After changing anything in `libs/crud` (or any lib), rebuild it (`yarn workspace @travix/crud build`) — apps import the compiled `dist`.
 

@@ -27,9 +27,18 @@ export function createPaginationObject<T, CustomMetaType extends ObjectLiteral =
         totalItems !== undefined
             ? {
                   first: route ? `${route}${symbol}${limitLabel}=${limit}` : '',
-                  previous: route && currentPage > 1 ? `${route}${symbol}${pageLabel}=${currentPage - 1}&${limitLabel}=${limit}` : '',
-                  next: route && totalPages && currentPage < totalPages ? `${route}${symbol}${pageLabel}=${currentPage + 1}&${limitLabel}=${limit}` : '',
-                  last: route && totalPages && totalPages > 0 ? `${route}${symbol}${pageLabel}=${totalPages}&${limitLabel}=${limit}` : '',
+                  previous:
+                      route && currentPage > 1
+                          ? `${route}${symbol}${pageLabel}=${currentPage - 1}&${limitLabel}=${limit}`
+                          : '',
+                  next:
+                      route && totalPages && currentPage < totalPages
+                          ? `${route}${symbol}${pageLabel}=${currentPage + 1}&${limitLabel}=${limit}`
+                          : '',
+                  last:
+                      route && totalPages && totalPages > 0
+                          ? `${route}${symbol}${pageLabel}=${totalPages}&${limitLabel}=${limit}`
+                          : '',
               }
             : undefined
 

@@ -1,44 +1,44 @@
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from 'lucide-react'
 
 export interface TripInput {
-  icon: LucideIcon;
-  label: string;
-  value: string;
+    icon: LucideIcon
+    label: string
+    value: string
 }
 
 export interface SampleDay {
-  day: string;
-  activity: string;
+    day: string
+    activity: string
 }
 
 export interface Destination {
-  image: string;
-  name: string;
-  country: string;
-  tagline: string;
+    image: string
+    name: string
+    country: string
+    tagline: string
 }
 
 export interface PricingPlan {
-  name: string;
-  price: string;
-  cadence: string;
-  description: string;
-  features: string[];
-  cta: string;
-  featured?: boolean;
+    name: string
+    price: string
+    cadence: string
+    description: string
+    features: string[]
+    cta: string
+    featured?: boolean
 }
 
 export interface AboutStat {
-  value: string;
-  label: string;
+    value: string
+    label: string
 }
 
 export interface FooterLink {
-  label: string;
-  href: string;
+    label: string
+    href: string
 }
 
 export interface FooterColumn {
-  title: string;
-  links: FooterLink[];
+    title: string
+    links: FooterLink[]
 }

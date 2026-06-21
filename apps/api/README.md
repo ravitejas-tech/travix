@@ -1,98 +1,113 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Travix API Server (NestJS REST API) 🚀
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the core backend API for the Travix application. It is built using **NestJS**, following a strict **CQRS (Command Query Responsibility Segregation)** pattern, and integrates with **TypeORM** for persistence and **Google Gemini AI** for travel generation.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🛠️ Tech Stack & Architecture
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Framework**: [NestJS](https://nestjs.com/) (modular, enterprise-grade architecture).
+- **Architecture Pattern**: **CQRS** via `@nestjs/cqrs` for clean separation of read (Query) and write (Command) logic.
+- **AI Integrations**: [Google Gemini SDK (`@google/genai`)](https://github.com/google/generative-ai-js) for structured JSON generation.
+- **Validation & OpenAPI**: `@sinclair/typebox` and the custom `@travix/crud` library for runtime validation and automatic Swagger Generation.
+- **ORM & Database**: [TypeORM](https://typeorm.io/) connecting to MySQL/MariaDB.
+- **Authentication**: Stateless JWT token authentication with [Passport](http://www.passportjs.org/).
+- **Authorization**: CASL (Attribute-based Access Control).
+- **Logger**: [Pino](https://github.com/pinojs/pino) (`nestjs-pino`) for fast and structured JSON logging.
 
-## Project setup
+---
 
-```bash
-$ yarn install
+## 📁 Project Directory Structure
+
+```text
+apps/api/src/
+├── api.module.ts            # Root API module configuring TypeORM, CQRS, Config, and Logger
+├── main.ts                  # NestJS entrypoint (cors, validation configurations, swagger setup)
+├── config/                  # Configuration loaders (database, jwt, etc.)
+├── strategies/              # Authentication strategies (JWT extraction and validation)
+├── guards/                  # Security guards (JwtAuthGuard, CaslGuard)
+├── decorators/              # Decorators like @AuthUser to access JWT profiles in controllers
+├── utils/                   # Setup utilities (Swagger OpenAPI configuration helper)
+├── cqrs/                    # CENTRALIZED CQRS Layer
+│   ├── commands/
+│   │   ├── impl/            # CQRS Command class definitions
+│   │   └── handlers/        # CQRS Command execution handlers (business/write logic)
+│   └── queries/
+│       ├── impl/            # CQRS Query class definitions
+│       └── handlers/        # CQRS Query execution handlers (read/DB queries)
+└── modules/                 # Modular HTTP Controllers & Registrations (Request/Response only)
+    ├── auth/                # Sign-in/Sign-up/Session endpoints
+    ├── generation/          # Google Gemini provider abstraction (Gemini & Stub clients)
+    ├── locations/           # Country/State/City lookup endpoints
+    ├── trips/               # Trip creation, list, and delete endpoints
+    ├── itinerary/           # Itinerary day & activity planning endpoints
+    └── hotels/              # Hotel suggestions endpoints
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ yarn run start
+## 🔑 Architecture Principles
 
-# watch mode
-$ yarn run start:dev
+Every developer and agent working on this API must follow these strict patterns:
 
-# production mode
-$ yarn run start:prod
+1.  **Strict CQRS**: No database query, entity mapping, ownership checks, or business logic resides in NestJS controllers. Controllers are _purely_ HTTP endpoints that validate input and dispatch commands/queries:
+    - **Writes/Actions**: Use `CommandBus` + Command Handlers.
+    - **Reads/Fetches**: Use `QueryBus` + Query Handlers.
+2.  **No Custom shared Business Services**: Do not write feature business services. All business logic lives in their respective CQRS handlers. Shared integrations (e.g. `TokenService` or `GenerationService` calling Gemini API) are exceptions.
+3.  **Database Access**: Always use `this.datasource.manager` inside CQRS handlers. Never inject repositories directly. Multiple database operations must be wrapped in transactions: `manager.transaction(...)`.
+4.  **TypeBox for DTO Validation**: Do not use `class-validator`. Define validation schemas in `dtos/payloads.ts` and `dtos/responses.ts` using TypeBox. Static TypeScript types are derived from schemas: `type Payload = Static<typeof PayloadSchema>`.
+5.  **Declarative Endpoints**: Declare controllers with the `@HttpEndpoint()` decorator from `@travix/crud`. Do not use bare `@Get`, `@Post`, `@Body` decorators.
+
+---
+
+## 🤖 AI Generation Layer
+
+The AI generation layer is located in `src/modules/generation/`.
+
+- It uses the abstract `GenerationService` interface, allowing hot-swapping generation engines.
+- **`GeminiGenerationService`**: Communicates with the Google Gemini API using structured schemas (defined in `@travix/shared`) to enforce JSON layouts.
+- **`StubGenerationService`**: A deterministic mockup generator that outputs valid travel plans, active when no `GEMINI_API_KEY` is present.
+- Gemini is only invoked inside CQRS command/query handlers.
+
+---
+
+## ⚙️ Configuration
+
+Set up environment variables in `apps/api/.env`:
+
+```env
+PORT=6500
+HOST=0.0.0.0
+
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=yourpassword
+DB_DATABASE=travix
+
+JWT_ACCESS_SECRET=your_access_secret_key
+JWT_ACCESS_EXPIRES_IN=15m
+JWT_REFRESH_SECRET=your_refresh_secret_key
+JWT_REFRESH_EXPIRES_IN=7d
+
+# Google Gemini (Optional)
+GEMINI_API_KEY=AIzaSy...
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
-## Run tests
+---
+
+## 🚀 Running the API
+
+Run the API locally in watch mode:
 
 ```bash
-# unit tests
-$ yarn run test
+# From workspace root
+yarn dev --filter=api
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+# Or inside apps/api
+yarn dev
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+The API will start on: `http://localhost:6500`
+Swagger documentation is generated automatically at: `http://localhost:6500/openapi`

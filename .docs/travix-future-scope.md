@@ -1,6 +1,6 @@
 # Travix — Future Scope & Roadmap
 
-*Where the application can grow*
+_Where the application can grow_
 
 ## Why this document exists
 
@@ -36,7 +36,7 @@ into a complete travel platform.
 - **Restaurant reservations** tied to itinerary stops.
 - **Payment processing** and order history within the app.
 
-This turns Travix from a *planning* tool into a *booking* platform — the largest
+This turns Travix from a _planning_ tool into a _booking_ platform — the largest
 business opportunity.
 
 ## 3. Collaboration & social features
@@ -94,11 +94,11 @@ business opportunity.
 
 These features fall into rough priority bands:
 
-| Band | Theme | Examples |
-|------|-------|----------|
-| **Near term** | Make the core better | Time-aware itineraries, weather awareness, conversational editing |
-| **Mid term** | Turn planning into action | Hotel & flight booking, group collaboration, mobile app |
-| **Long term** | Become a platform | Marketplace, B2B, white-label, API ecosystem |
+| Band          | Theme                     | Examples                                                          |
+| ------------- | ------------------------- | ----------------------------------------------------------------- |
+| **Near term** | Make the core better      | Time-aware itineraries, weather awareness, conversational editing |
+| **Mid term**  | Turn planning into action | Hotel & flight booking, group collaboration, mobile app           |
+| **Long term** | Become a platform         | Marketplace, B2B, white-label, API ecosystem                      |
 
 The key point: **the current application is a strong, intentionally simple foundation.**
 Each item above can be added independently and incrementally, allowing Travix to scale

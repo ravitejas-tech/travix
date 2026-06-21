@@ -1,3 +1,3 @@
-import { Type } from '@sinclair/typebox'
+import { Type } from '@sinclair/typebox';
 
-export const TripIdParam = Type.String()
+export const TripIdParam = Type.String();

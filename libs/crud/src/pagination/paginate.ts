@@ -25,7 +25,9 @@ export async function paginate<T, CustomMetaType = IPaginationMeta>(
         : paginateQueryBuilder<T, CustomMetaType>(repositoryOrQueryBuilder, options)
 }
 
-function resolveOptions(options: IPaginationOptions<any>): [number, number, string, PaginationTypeEnum, boolean, TypeORMCacheType] {
+function resolveOptions(
+    options: IPaginationOptions<any>,
+): [number, number, string, PaginationTypeEnum, boolean, TypeORMCacheType] {
     const page = Number(options.page ?? DEFAULT_PAGE)
     const limit = Number(options.limit ?? DEFAULT_LIMIT)
     const route = options.route
@@ -72,7 +74,9 @@ export async function paginateQueryBuilder<T, CustomMetaType = IPaginationMeta>(
         (paginationType === PaginationTypeEnum.LIMIT_AND_OFFSET
             ? queryBuilder.limit(limit).offset((page - 1) * limit)
             : queryBuilder.take(limit).skip((page - 1) * limit)
-        ).cache(cacheOption).getMany(),
+        )
+            .cache(cacheOption)
+            .getMany(),
         countQueries ? countQuery(queryBuilder, cacheOption) : Promise.resolve(undefined),
     ])
 

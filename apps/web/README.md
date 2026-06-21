@@ -1,87 +1,95 @@
-# Welcome to React Router!
+# Travix Web Client (React Router v8) 🌐🎨
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
-
-## Features
-
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-
-## Getting Started
-
-### Installation
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+This is the interactive frontend application for Travix. It is built as a single-page app (SPA) using **React Router v8** (React 19) and styled with **Tailwind CSS v4**. It features an elegant multi-step Trip Generation Wizard, dynamic timelines, interactive budgets, and smooth animations powered by **Framer Motion**.
 
 ---
 
-Built with ❤️ using React Router.
+## 🛠️ Tech Stack & Libraries
+
+- **Framework**: [React Router v8](https://reactrouter.com/) (formerly Remix v2) running in SPA mode with React 19.
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with `@tailwindcss/vite` integration.
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand) for global token persistence and layout states.
+- **API Fetching**: [TanStack React Query v5](https://tanstack.com/query/latest) + [`react-query-kit`](https://github.com/liaoliao666/react-query-kit) for clean, encapsulated query and mutation hooks.
+- **Animations**: [Framer Motion v12](https://www.framer.com/motion/) for micro-animations, slide-ins, and orchestrations.
+- **Forms**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) validation resolvers.
+- **Routing & Utility**: [Rapiq](https://github.com/rapiq/rapiq) for building URL filters and parsing query parameters.
+- **Icons & Alerts**: `lucide-react` for icon assets and `sonner` for toast notifications.
+
+---
+
+## 📁 Project Directory Structure
+
+```text
+apps/web/app/
+├── root.tsx                  # Base layout, HTML shell, and global providers setup
+├── routes.ts                 # Page routes configuration (mapped to routes/)
+├── app.css                   # Tailwind v4 configuration, theme tokens, and typography
+├── Welcome/                  # Welcome assets
+├── api/
+│   └── swagger/              # Auto-generated API client using swagger-typescript-api
+├── queries/                  # React Query Kit endpoints definitions
+├── schemas/                  # Shared Zod validation schemas for forms
+├── stores/                   # Zustand stores (session and auth management)
+├── hooks/                    # Global React custom hooks (e.g. useDebounce)
+├── lib/                      # Common axios and api clients configurations
+├── types/                    # Shared frontend types
+├── components/               # FEATURE-BASED component co-location
+│   ├── ui/                   # Reusable atomic UI elements (Button, Card, Input)
+│   ├── auth/                 # Sign-in and sign-up form components
+│   ├── dashboard/            # Sidebar navigation, layout containers, and overview stats
+│   ├── trip-wizard/          # Multi-step Destination, Details, and Interests wizard
+│   ├── trip-detail/          # Day timeline, activities lists, hotel lists, and budget trackers
+│   └── hero/                 # Landing page content blocks (Hero, Features, Pricing)
+└── routes/                   # Routing page containers
+    ├── home.tsx              # Public landing page
+    ├── auth/                 # Auth layouts (login, register)
+    └── dashboard/            # Protected views (overview, trips list, trip details)
+```
+
+---
+
+## 📐 Design System & Guidelines
+
+Developers and agents must conform to these styling and structural guidelines:
+
+1.  **Strict File Size Limit**: No React file should exceed **150 lines**. Split large components into smaller, single-responsibility files inside their feature-specific subfolder (e.g., `components/trip-detail/`).
+2.  **Color System**: Consistent color palettes defined in `app.css` using theme variables:
+    - **Primary Background**: White (`bg-background`).
+    - **Brand Primary Text**: Blue (`text-primary` / `bg-primary`).
+    - **Supporting Copy**: Gray (`text-muted`).
+    - **Contrast Text**: White (`text-secondary` / `bg-secondary`).
+    - _Do not hardcode hex colors or custom inline grays._
+3.  **Typography**: **Poppins** is loaded globally and is the _only_ font family allowed.
+4.  **UI Logic**: The client is a presentation layer. Do not write business logic, filtering, or aggregations here; rely on the backend API as the single source of truth.
+5.  **Path Aliasing**: Import files from subdirectories using the tilde alias (e.g., `~/queries/...`, `~/hooks/...`), avoiding deep relative paths.
+
+---
+
+## 🚀 Running the Web App
+
+Start the frontend development server:
+
+```bash
+# From workspace root
+yarn dev --filter=web
+
+# Or inside apps/web
+yarn dev
+```
+
+The application will run at: `http://localhost:5173`
+
+---
+
+## 🔄 API Client Generation
+
+The web app uses `swagger-typescript-api` to generate a typed API client based on the backend Swagger OpenAPI JSON spec.
+
+To regenerate the Swagger client definitions:
+
+```bash
+# Ensure apps/api is running on port 6500, then run:
+yarn workspace web api:generate
+```
+
+This updates the client definitions inside `app/api/swagger/`.

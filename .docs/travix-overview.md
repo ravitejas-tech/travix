@@ -1,6 +1,6 @@
 # Travix — Travel Intelligence Experience
 
-*A non-technical overview*
+_A non-technical overview_
 
 ## What is Travix?
 
@@ -27,10 +27,12 @@ only to you — no one else can see or change them.
 ## How it works (in plain steps)
 
 ### 1. Create your account
+
 You sign up and log in securely. Your personal dashboard is your home base, showing
 the trips you've planned.
 
 ### 2. Tell Travix about your trip
+
 You fill in a short form with:
 
 - **Destination** — e.g. Tokyo
@@ -39,20 +41,25 @@ You fill in a short form with:
 - **Interests** — Food, Culture, Adventure, Shopping, and more
 
 ### 3. Get an instant itinerary
+
 The AI assistant creates a **day-by-day plan** built around what you care about.
 
 > **Day 1**
+>
 > - Visit Senso-ji Temple
 > - Explore Asakusa street food
 >
 > **Day 2**
+>
 > - Tokyo Skytree
 > - Akihabara shopping
 
 ### 4. See an estimated budget
+
 Travix also estimates what the trip will cost, broken down so there are no surprises.
 
 > **Estimated Budget**
+>
 > - Flights: $400
 > - Accommodation: $300
 > - Food: $150
@@ -60,18 +67,21 @@ Travix also estimates what the trip will cost, broken down so there are no surpr
 > - **Total: $950**
 
 ### 5. Make it your own
+
 The plan is a starting point, not a rulebook. You can:
 
 - **Remove** an activity you're not interested in.
 - **Add** something you'd rather do.
-- **Regenerate a day** with new ideas — for example, *"Regenerate Day 3 with more
-  outdoor activities."*
+- **Regenerate a day** with new ideas — for example, _"Regenerate Day 3 with more
+  outdoor activities."_
 
 ### 6. Find a place to stay (bonus)
+
 Travix can also suggest hotels for your destination, matched to your budget and based
 on popular traveler ratings.
 
 > **Recommended Hotels**
+>
 > - Hotel Sakura Tokyo — Budget Friendly
 > - Shinjuku Grand Hotel — Mid Range
 > - Tokyo Imperial Palace Hotel — Luxury
@@ -86,6 +96,6 @@ on popular traveler ratings.
 
 ## The big picture
 
-Travix turns a vague idea — *"I want to visit Tokyo for a few days"* — into a concrete,
+Travix turns a vague idea — _"I want to visit Tokyo for a few days"_ — into a concrete,
 adjustable plan with activities, costs, and places to stay. It removes the stress from
 trip planning so you can focus on the part that matters: the journey itself.

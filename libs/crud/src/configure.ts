@@ -5,7 +5,9 @@ import { patchNestJsSwagger } from './swagger-patch'
 import { Configure } from './types'
 
 export const configureNestJsTypebox = (options?: Configure) => {
-    SetErrorFunction((params) => (params.schema as { errorMessage?: string }).errorMessage ?? DefaultErrorFunction(params))
+    SetErrorFunction(
+        (params) => (params.schema as { errorMessage?: string }).errorMessage ?? DefaultErrorFunction(params),
+    )
 
     if (options?.patchSwagger) {
         patchNestJsSwagger()
