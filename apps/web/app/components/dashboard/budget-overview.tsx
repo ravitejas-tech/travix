@@ -6,7 +6,7 @@ import type { V1TripsControllerListResponse } from '~/api'
 import type { BudgetValue } from '~/data/trip.constants'
 
 const BUDGET_COLORS: Record<BudgetValue, { bar: string; dot: string; label: string }> = {
-    low: { bar: 'bg-gradient-to-r from-emerald-400 to-teal-500', dot: 'bg-emerald-500', label: 'Budget Class' },
+    low: { bar: 'bg-gradient-to-r from-emerald-400 to-teal-500', dot: 'bg-emerald-500', label: 'Economy Class' },
     medium: { bar: 'bg-gradient-to-r from-sky-400 to-primary', dot: 'bg-sky-500', label: 'Balanced Class' },
     high: { bar: 'bg-gradient-to-r from-violet-500 to-fuchsia-500', dot: 'bg-violet-500', label: 'Luxury Class' },
 }
