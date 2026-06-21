@@ -43,9 +43,9 @@ export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
     ]);
 
     const userLocationName = userLocationCity
-      ? (userLocationCity.country
-          ? `${userLocationCity.name}, ${userLocationCity.country.name}`
-          : userLocationCity.name)
+      ? userLocationCity.country
+        ? `${userLocationCity.name}, ${userLocationCity.country.name}`
+        : userLocationCity.name
       : '';
 
     const generated = await this.generationService.generateTrip({

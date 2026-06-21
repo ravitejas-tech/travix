@@ -29,7 +29,9 @@ export class GeminiGenerationService extends GenerationService {
   async generateTrip(context: GenerationContext): Promise<GeneratedTrip> {
     const prompt = [
       `Plan a ${context.numberOfDays}-day trip to ${context.destination}.`,
-      context.userLocation ? `The traveler is departing from ${context.userLocation}.` : '',
+      context.userLocation
+        ? `The traveler is departing from ${context.userLocation}.`
+        : '',
       `Budget level: ${context.budgetType}. Costs in ${context.currencyCode}.`,
       `Traveler interests: ${context.interests.join(', ') || 'general sightseeing'}.`,
       `For the transportation cost (stored in the flights field), estimate the cost based on the distance and logical travel mode between the starting origin and destination (e.g. flight for long distances, train/car/bus for nearby locations).`,

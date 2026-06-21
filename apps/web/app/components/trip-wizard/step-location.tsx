@@ -15,7 +15,9 @@ export function StepLocation({ form }: StepLocationProps) {
         <div className="flex flex-col gap-3">
             <div>
                 <h3 className="text-lg font-semibold text-primary">Where are you starting from?</h3>
-                <p className="text-sm text-muted">We use this to estimate your flight budget and travel costs accurately. (Optional)</p>
+                <p className="text-sm text-muted">
+                    We use this to estimate your flight budget and travel costs accurately. (Optional)
+                </p>
             </div>
 
             <CitySearch

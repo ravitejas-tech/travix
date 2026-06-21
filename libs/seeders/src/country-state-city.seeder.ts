@@ -50,10 +50,7 @@ export class CountrySeeder extends BaseSeeder {
         return manager.find(CountryEntity)
     }
 
-    private async seedAllStates(
-        manager: EntityManager,
-        countries: CountryEntity[],
-    ): Promise<StateEntity[]> {
+    private async seedAllStates(manager: EntityManager, countries: CountryEntity[]): Promise<StateEntity[]> {
         const existing: StateEntity[] = await manager.find(StateEntity)
         const existingKeys = new Set(existing.map((s) => `${s.countryId}:${s.code}`))
 

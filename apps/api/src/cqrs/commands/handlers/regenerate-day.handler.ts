@@ -30,7 +30,12 @@ export class RegenerateDayHandler implements ICommandHandler<RegenerateDayComman
 
     const trip = await manager.findOne(TripEntity, {
       where: { id: tripId, userId },
-      relations: ['city', 'city.country', 'userLocation', 'userLocation.country'],
+      relations: [
+        'city',
+        'city.country',
+        'userLocation',
+        'userLocation.country',
+      ],
     });
     if (!trip) {
       throw new NotFoundException('trip not found');
@@ -119,7 +124,9 @@ export class RegenerateDayHandler implements ICommandHandler<RegenerateDayComman
     const userCityName = trip.userLocation?.name;
     const userCountryName = trip.userLocation?.country?.name;
     const userLocation = userCityName
-      ? (userCountryName ? `${userCityName}, ${userCountryName}` : userCityName)
+      ? userCountryName
+        ? `${userCityName}, ${userCountryName}`
+        : userCityName
       : '';
     return {
       userLocation,

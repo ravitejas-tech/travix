@@ -1,14 +1,4 @@
-import {
-    Camera,
-    Landmark,
-    Leaf,
-    Moon,
-    Mountain,
-    ShoppingBag,
-    Sparkles,
-    Utensils,
-    type LucideIcon,
-} from 'lucide-react'
+import { Camera, Landmark, Leaf, Moon, Mountain, ShoppingBag, Sparkles, Utensils, type LucideIcon } from 'lucide-react'
 
 import type { BudgetValue } from './trip.constants'
 

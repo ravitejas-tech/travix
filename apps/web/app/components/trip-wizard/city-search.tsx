@@ -38,7 +38,7 @@ export function CitySearch({ value, onSelect, placeholder }: CitySearchProps) {
                         setOpen(true)
                     }}
                     onFocus={() => setOpen(true)}
-                    placeholder={placeholder ?? "Search a city, e.g. Tokyo"}
+                    placeholder={placeholder ?? 'Search a city, e.g. Tokyo'}
                     className="w-full bg-transparent text-sm text-primary outline-none placeholder:text-muted/60"
                 />
             </div>

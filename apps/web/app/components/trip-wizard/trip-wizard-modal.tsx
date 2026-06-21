@@ -17,7 +17,12 @@ import { StepDetails } from './step-details'
 import { StepInterests } from './step-interests'
 import { WizardProgress } from './wizard-progress'
 
-const STEP_FIELDS: (keyof CreateTripValues)[][] = [['userLocationId'], ['cityId'], ['numberOfDays', 'budgetType'], ['interests']]
+const STEP_FIELDS: (keyof CreateTripValues)[][] = [
+    ['userLocationId'],
+    ['cityId'],
+    ['numberOfDays', 'budgetType'],
+    ['interests'],
+]
 
 interface TripWizardModalProps {
     open: boolean
