@@ -29,11 +29,16 @@ export class GeminiGenerationService extends GenerationService {
   async generateTrip(context: GenerationContext): Promise<GeneratedTrip> {
     const prompt = [
       `Plan a ${context.numberOfDays}-day trip to ${context.destination}.`,
+      context.userLocation ? `The traveler is departing from ${context.userLocation}.` : '',
       `Budget level: ${context.budgetType}. Costs in ${context.currencyCode}.`,
       `Traveler interests: ${context.interests.join(', ') || 'general sightseeing'}.`,
+      `For the transportation cost (stored in the flights field), estimate the cost based on the distance and logical travel mode between the starting origin and destination (e.g. flight for long distances, train/car/bus for nearby locations).`,
+      `Provide a brief, 1-sentence explanation in each of the description fields (flightsDescription, accommodationDescription, foodDescription, activitiesDescription) detailing exactly how that cost was estimated (e.g. specifying the travel mode/route, average nightly lodging rate, daily meal estimate, or activity fees).`,
       `Produce a day-by-day itinerary (2-4 activities/day), an estimated budget, and 3 hotel suggestions`,
       `(one budget, one mid_range, one luxury).`,
-    ].join(' ');
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     return this.generate<GeneratedTrip>(prompt, generationTripSchema);
   }
@@ -46,9 +51,12 @@ export class GeminiGenerationService extends GenerationService {
     const prompt = [
       `For a ${context.numberOfDays}-day trip to ${context.destination} (budget: ${context.budgetType},`,
       `interests: ${context.interests.join(', ') || 'general sightseeing'}),`,
+      context.userLocation ? `departing from ${context.userLocation},` : '',
       `regenerate the plan for day ${dayNumber} with 2-4 activities.`,
       instructions ? `Extra instructions: ${instructions}.` : '',
-    ].join(' ');
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     return this.generate<GeneratedDay>(prompt, generationDaySchema);
   }
@@ -56,8 +64,11 @@ export class GeminiGenerationService extends GenerationService {
   async generateHotels(context: GenerationContext): Promise<GeneratedHotel[]> {
     const prompt = [
       `Suggest 3 hotels in ${context.destination} for a ${context.budgetType}-budget traveler`,
+      context.userLocation ? `traveling from ${context.userLocation}` : '',
       `(one budget, one mid_range, one luxury), with ratings out of 5.`,
-    ].join(' ');
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     const result = await this.generate<{ hotels: GeneratedHotel[] }>(
       prompt,
