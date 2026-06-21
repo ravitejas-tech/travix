@@ -30,7 +30,9 @@ export class StubGenerationService extends GenerationService {
   private readonly logger = new Logger(StubGenerationService.name);
 
   async generateTrip(context: GenerationContext): Promise<GeneratedTrip> {
-    this.logger.debug(`Generating stub trip for ${context.destination}`);
+    this.logger.debug(
+      `Generating stub trip for ${context.destination}${context.userLocation ? ` (from ${context.userLocation})` : ''}`,
+    );
 
     const days: GeneratedDay[] = Array.from(
       { length: context.numberOfDays },
@@ -88,11 +90,20 @@ export class StubGenerationService extends GenerationService {
     const food = Math.round(daily * 0.4 * context.numberOfDays);
     const activities = Math.round(daily * 0.3 * context.numberOfDays);
     const flights = daily * 4;
+
+    const flightsDescription = context.userLocation
+      ? `Round-trip transportation from ${context.userLocation} to ${context.destination} based on standard rates.`
+      : `Local transit and regional connection costs within ${context.destination}.`;
+
     return {
       flights,
+      flightsDescription,
       accommodation,
+      accommodationDescription: `Estimated lodging for ${context.numberOfDays} nights at a baseline of $${daily}/night for ${context.budgetType} tier stays.`,
       food,
+      foodDescription: `Dining and food expenses estimated at an average of $${Math.round(daily * 0.4)}/day over ${context.numberOfDays} days.`,
       activities,
+      activitiesDescription: `Covers entry tickets, transport tickets, and activity fees for ${context.numberOfDays} days.`,
       total: flights + accommodation + food + activities,
     };
   }
