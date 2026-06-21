@@ -11,12 +11,13 @@ import { queryClient } from '~/lib/query-client'
 import { useCreateTrip, useTrips } from '~/queries/trips.query'
 import { createTripSchema, type CreateTripValues } from '~/schemas/trip.schema'
 import { GeneratingOverlay } from './generating-overlay'
+import { StepLocation } from './step-location'
 import { StepDestination } from './step-destination'
 import { StepDetails } from './step-details'
 import { StepInterests } from './step-interests'
 import { WizardProgress } from './wizard-progress'
 
-const STEP_FIELDS: (keyof CreateTripValues)[][] = [['cityId'], ['numberOfDays', 'budgetType'], ['interests']]
+const STEP_FIELDS: (keyof CreateTripValues)[][] = [['userLocationId'], ['cityId'], ['numberOfDays', 'budgetType'], ['interests']]
 
 interface TripWizardModalProps {
     open: boolean
@@ -31,6 +32,8 @@ export function TripWizardModal({ open, onClose, initialInterests }: TripWizardM
     const form = useForm<CreateTripValues>({
         resolver: zodResolver(createTripSchema),
         defaultValues: {
+            userLocationId: '',
+            userLocationLabel: '',
             cityId: '',
             cityLabel: '',
             numberOfDays: 5,
@@ -44,6 +47,8 @@ export function TripWizardModal({ open, onClose, initialInterests }: TripWizardM
         if (!open) return
         setStep(0)
         form.reset({
+            userLocationId: '',
+            userLocationLabel: '',
             cityId: '',
             cityLabel: '',
             numberOfDays: 5,
@@ -58,7 +63,7 @@ export function TripWizardModal({ open, onClose, initialInterests }: TripWizardM
         if (await form.trigger(STEP_FIELDS[step])) setStep((s) => s + 1)
     }
 
-    const submit = form.handleSubmit(({ cityLabel: _l, ...payload }) =>
+    const submit = form.handleSubmit(({ cityLabel: _l, userLocationLabel: _ul, ...payload }) =>
         mutate(payload, {
             onSuccess: (trip) => {
                 queryClient.invalidateQueries({ queryKey: useTrips.getKey() })
@@ -86,9 +91,10 @@ export function TripWizardModal({ open, onClose, initialInterests }: TripWizardM
                                 exit={{ opacity: 0, x: -24 }}
                                 transition={{ duration: 0.25 }}
                             >
-                                {step === 0 && <StepDestination form={form} />}
-                                {step === 1 && <StepDetails form={form} />}
-                                {step === 2 && <StepInterests form={form} />}
+                                {step === 0 && <StepLocation form={form} />}
+                                {step === 1 && <StepDestination form={form} />}
+                                {step === 2 && <StepDetails form={form} />}
+                                {step === 3 && <StepInterests form={form} />}
                             </motion.div>
                         </AnimatePresence>
                     </div>
@@ -104,7 +110,7 @@ export function TripWizardModal({ open, onClose, initialInterests }: TripWizardM
                             <ArrowLeft className="h-4 w-4" /> Back
                         </button>
 
-                        {step < 2 ? (
+                        {step < 3 ? (
                             <button
                                 type="button"
                                 onClick={next}

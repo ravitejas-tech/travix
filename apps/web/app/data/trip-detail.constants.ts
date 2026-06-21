@@ -49,11 +49,16 @@ export const ACTIVITY_TYPE_STYLES: Record<
 }
 
 /** Rows for the budget breakdown, in display order. */
-export const BUDGET_BREAKDOWN_ROWS: { key: keyof BudgetEstimate; label: string; icon: LucideIcon }[] = [
-    { key: 'flights', label: 'Flights', icon: Plane },
-    { key: 'accommodation', label: 'Accommodation', icon: Bed },
-    { key: 'food', label: 'Food', icon: Utensils },
-    { key: 'activities', label: 'Activities', icon: Ticket },
+export const BUDGET_BREAKDOWN_ROWS: {
+    key: keyof BudgetEstimate
+    descriptionKey: keyof BudgetEstimate
+    label: string
+    icon: LucideIcon
+}[] = [
+    { key: 'flights', descriptionKey: 'flightsDescription', label: 'Transportation', icon: Plane },
+    { key: 'accommodation', descriptionKey: 'accommodationDescription', label: 'Accommodation', icon: Bed },
+    { key: 'food', descriptionKey: 'foodDescription', label: 'Food', icon: Utensils },
+    { key: 'activities', descriptionKey: 'activitiesDescription', label: 'Activities', icon: Ticket },
 ]
 
 /** Tabs on the trip detail page. */
