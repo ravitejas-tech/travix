@@ -49,7 +49,7 @@ export function RegenerateDay({ tripId, dayId }: RegenerateDayProps) {
                         initial={{ opacity: 0, y: -6 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -6 }}
-                        className="absolute right-0 z-20 mt-2 w-64 rounded-xl border border-gray-100 bg-white p-3 shadow-xl"
+                        className="absolute right-0 z-40 mt-2 w-64 rounded-xl border border-gray-200 bg-white p-3 shadow-2xl shadow-black/10"
                     >
                         <textarea
                             value={instructions}
