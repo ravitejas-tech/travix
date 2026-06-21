@@ -614,6 +614,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                  * @default 20
                  */
                 limit?: number
+                /** @example "Tokyo" */
+                search?: string
+                /** @example "budget_high" */
+                sort?: 'recent' | 'budget_high' | 'budget_low'
             },
             params: RequestParams = {},
         ) =>
