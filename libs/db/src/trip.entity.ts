@@ -24,6 +24,14 @@ export class TripEntity extends BaseEntity {
 
     // relations
     @Index()
+    @Column({ type: 'varchar', length: 26, nullable: true })
+    userLocationId: string | null
+
+    @ManyToOne(() => CityEntity)
+    @JoinColumn({ name: 'userLocationId' })
+    userLocation: CityEntity | null
+
+    @Index()
     @Column({ type: 'varchar', length: 26 })
     userId: string
 
