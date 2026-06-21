@@ -3,12 +3,16 @@ import { Link } from 'react-router'
 import type { Route } from './+types/register'
 import { AuthLayout } from '../../components/auth/auth-layout'
 import { RegisterForm } from '../../components/auth/register-form'
+import { useRedirectIfAuthenticated } from '~/hooks/use-redirect-if-authenticated'
 
 export function meta({}: Route.MetaArgs) {
     return [{ title: 'Create account · Travix' }]
 }
 
 export default function Register() {
+    const redirecting = useRedirectIfAuthenticated()
+    if (redirecting) return null
+
     return (
         <AuthLayout
             title="Create your account"
