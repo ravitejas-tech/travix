@@ -6,6 +6,7 @@ import { Destinations } from '../components/destinations/destinations'
 import { Pricing } from '../components/pricing/pricing'
 import { About } from '../components/about/about'
 import { Footer } from '../components/footer/footer'
+import { useRedirectIfAuthenticated } from '~/hooks/use-redirect-if-authenticated'
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -18,6 +19,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+    const redirecting = useRedirectIfAuthenticated()
+    if (redirecting) return null
+
     return (
         <main className="bg-background text-primary">
             <Header />
