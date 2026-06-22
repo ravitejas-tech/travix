@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { MapPin, Search } from 'lucide-react'
 import { useState } from 'react'
 
+import { MIN_SEARCH_LENGTH } from '~/data/trip-wizard.constants'
 import { useDebounce } from '~/hooks/use-debounce'
 import { useSearchCities } from '~/queries/locations.query'
 
@@ -18,7 +19,7 @@ export function CitySearch({ value, onSelect, placeholder }: CitySearchProps) {
 
     const { data, isFetching } = useSearchCities({
         variables: { search },
-        enabled: search.length >= 2,
+        enabled: search.length >= MIN_SEARCH_LENGTH,
     })
 
     const handlePick = (cityId: string, label: string) => {
@@ -44,7 +45,7 @@ export function CitySearch({ value, onSelect, placeholder }: CitySearchProps) {
             </div>
 
             <AnimatePresence>
-                {open && search.length >= 2 && (
+                {open && search.length >= MIN_SEARCH_LENGTH && (
                     <motion.ul
                         initial={{ opacity: 0, y: -6 }}
                         animate={{ opacity: 1, y: 0 }}
