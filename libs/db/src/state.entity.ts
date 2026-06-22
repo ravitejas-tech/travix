@@ -5,6 +5,7 @@ import { CountryEntity } from './country.entity'
 @Entity('states')
 export class StateEntity extends BaseEntity {
     // properties
+    @Index({ fulltext: true })
     @Column({ type: 'varchar' })
     name: string
 
