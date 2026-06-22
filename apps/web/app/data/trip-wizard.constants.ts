@@ -8,3 +8,5 @@ export const GENERATING_MESSAGES = [
 
 /** Step labels for the trip wizard progress bar. */
 export const WIZARD_STEPS = ['Origin', 'Destination', 'Trip details', 'Interests']
+
+export const MIN_SEARCH_LENGTH = 3
